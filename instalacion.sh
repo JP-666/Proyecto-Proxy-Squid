@@ -1,4 +1,5 @@
 #!/bin/bash
+# Este script instala squid-proxy
 
 apt update
 
