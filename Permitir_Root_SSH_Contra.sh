@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Esto nos permite iniciar sesion como superusuario en ssh con contraseña, por no tener que estart creando certificados ni nada.
+# Esto nos permite iniciar sesion como superusuario en ssh con contraseña, por no tener que estar creando certificados ni nada.
 # Esto es MUY inseguro, no deberias hacer esto en un servidor en producion
 
 sed 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config | tee /etc/ssh/sshd_config
