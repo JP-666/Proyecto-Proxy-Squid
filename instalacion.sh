@@ -7,5 +7,5 @@ then
   exit
 else
   apt update
-  apt install squid-proxy
+  apt install squid
 fi
