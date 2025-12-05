@@ -6,6 +6,11 @@
 
 interfaz_fuera=eth0
 interfaz_interna=eth1
+IP_ESTE_SERVIDOR=10.0.0.1
+IP_RED=10.0.0.0
+NETMASK=255.255.255.0
+BCAST=10.0.0.255
+
 
 #############################################
 
@@ -24,10 +29,10 @@ iface lo inet loopback
 
 auto eth1
 iface eth1 inet static
-	address 10.0.0.1
-	network 10.0.0.0
-	netmask 255.255.255.0
-	broadcast 10.0.0.255
+	address $IP_ESTE_SERVIDOR
+	network $IP_RED
+	netmask $NETMASK
+	broadcast $BCAST
 
 auto eth0
 iface eth0 inet dhcp
