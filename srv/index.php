@@ -169,7 +169,7 @@ background-color: red;
 <?php
 $memor = shell_exec('free -m | awk \'/Mem/ {print "Total: " $2 "MB<br>", " Libre: " $4 "MB"}\'');
 $upti = shell_exec('uptime');
-$ps = shell_exec('ps -a');
+$ps = shell_exec('ps -aux');
 $conn = shell_exec('timeout 1.5 ping -c 1 8.8.8.8 > /dev/null 2>&1 && echo "CONECTADO AL CIBERESPACIO!" || echo "DESCONECTADO! ALERTA HACKEO RUSO!!!"');
 
 
