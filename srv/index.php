@@ -74,7 +74,7 @@ border-color: #FFA500;
 button {
 width: 100%;
 padding: 25px;
-background-image: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%); /* Esto es un gradiente */
+background-image: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%); /* Estoes un gradiente */
 color: #00FF00;
 font-size: 2em;
 font-weight: 900;
@@ -125,29 +125,37 @@ color: white;
 font-size: 2em;
 background-color: red;
 }
+#encuenta_satis {
+all: unset;
+width: 30%;
+max-width: 600px;
+margin-bottom: 250px;
+margin-left: -150%;
+padding: 50px;
+background-color: #810501;
+border: 7px solid #FF69B4;
+border-radius: 15px;
+box-shadow: 25px 25px 25px #000000;
+}
 </style>
 </head>
 <body>
 
 <h1>ADMIN DEL ROUTER!!! ADBERTENCIA:: PELIJRO!!</h1>
-
-<form action="pros_ip.php" method="POST"> <!-- Las palabras de alguien resuenan, "no hace falta poner esto en mayusculas", pero es que se me hace ANTI-NATURAL!! -->
+<!-- Las palabras de alguien resuenan, "no hace falta poner esto en mayusculas", pero es que se me hace ANTI-NATURAL!! -->
+<!-- <form action="pros_ip.php" method="POST">
 <label for="nuevaip">MI NUEVA IP:::!!!:</label>
 <input type="text" id="nuevaip" name="nuevaip" placeholder="1.1.1.1">
 
 <button type="submit">GUARDA MI NUEVA IP!</button>
 </form>
-
-<br>
-
-<form action="instala.php" method="POST"> <!-- Las palabras de alguien resuenan, "no hace falta poner esto en mayusculas", pero es que se me hace ANTI-NATURAL!! -->
+<form action="instala.php" method="POST">
 <label for="paquete">INSLAKA PAKETES!!:!!!:</label>
 <input type="text" id="paquete" name="paquete" placeholder="Paquete">
 
 <button type="submit">DALE! MISTE WORLWAID!</button>
 </form>
 
-<br>
 
 <form>
 <label for="wifin">NOMBRE WIFI (PROXIAMTE!!!):!!!:</label>
@@ -159,10 +167,43 @@ background-color: red;
 
 </form>
 
+-->
 
+<form style="border: 15px solid lightblue; border-radius:25px;">
+<fieldset>
+<legend>Encuasta de satis<s>fier</s>faccion</legend>
+<p style="font-size: 4em;">¿Como de satisfecho estas con el servicio?</p>
+<label>1</label>
+<input type="radio" id="satis1" name="satis1" disabled>
+<br>
+<label>2</label>
+<input type="radio" id="satis1" name="satis1" disabled>
+<br>
+<label>3</label>
+<input type="radio" id="satis1" name="satis1" disabled>
+<br>
+<label>4</label>
+<input type="radio" id="satis1" name="satis1" disabled>
+<br>
+<label>5</label>
+<input type="radio" id="satis1" disabled name="satis1">
+<br>
+<label>7</label>
+<input type="radio" id="satis1" disabled name="satis1">
+<br>
+<label>8</label>
+<input type="radio" id="satis1" name="satis1">
+<br>
+<label>10</label>
+<input type="radio" id="satis1" name="satis1">
+<br>
+
+</fieldset>
+</form>
 
 <h1>Descar,ga el certifikado</h1>
 <a href="/certi.pem">Pulsame para descargar!!</a>
+
 
 
 
@@ -171,8 +212,8 @@ $memor = shell_exec('free -m | awk \'/Mem/ {print "Total: " $2 "MB<br>", " Libre
 $upti = shell_exec('uptime');
 $ps = shell_exec('ps -aux');
 $conn = shell_exec('timeout 1.5 ping -c 1 8.8.8.8 > /dev/null 2>&1 && echo "CONECTADO AL CIBERESPACIO!" || echo "DESCONECTADO! ALERTA HACKEO RUSO!!!"');
-
-
+$ip = shell_exec('ip a');
+$ipv = shell_exec('ip neighbour');
 
 echo "<h1>MEMORIA:</h1>";
 
@@ -192,6 +233,16 @@ echo "<h1>ESTATO DE LA RED:;</h1>";
 
 echo $conn;
 
+echo "<h1>IP:</h1>";
+
+echo str_replace("\n","<br>",$ip);
+
+echo "<h1>DISPOSITIVOS CONECTADOS:</h1>";
+
+echo str_replace("\n","<br>",$ipv);
+
+
+
 ?>
 
 
@@ -200,6 +251,9 @@ echo $conn;
 <h1 class="h1_peque">POR FABOR VUELVE LUEGO"</h1><br>
 <h1 class="h1_peque">h1 class="h1_peque"> para ver mas!!</h1><br>
 </div>
+
+
+
 
 </body>
 </html>
