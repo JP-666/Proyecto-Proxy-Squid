@@ -9,7 +9,7 @@ exit
 fi
 
 # Copiamos las cosas del sitio del "router"
-cp /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
+cp srv /srv
 
 
 # Prep. El sistema
@@ -28,7 +28,7 @@ cat /usr/share/openssh/sshd_config | sed 's/\#PermitRootLogin prohibit-password/
 
 # Copiar configs
 cp squid.conf /etc/squid/squid.conf
-cp interfaces /etc/networking/interfaces
+cp interfaces /etc/network/interfaces
 
 
 # Configura IPTABLES
