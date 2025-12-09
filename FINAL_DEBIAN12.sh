@@ -9,38 +9,67 @@ exit
 fi
 
 # Copiamos las cosas del sitio del "router"
-cp srv /srv
+echo "Copiando archivos" >&2
+cp -rvf srv / >&2
 
+read -p "Presiona intro para continuar"
 
 # Prep. El sistema
+echo "Preparando el sistema" >&2
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.conf
 sysctl -p
 
+read -p "Presiona intro para continuar"
 
+echo "Copiando y conf. red"
+cp interfaces /etc/network/interfaces -rvf
+systemctl restart networking
 
 # Instala
+
+echo "Iniciando la instalacion, esto puede tardar un ratito..." >&2
+
+apt update
+
+read -p "La instalacion va a dar un error de isc-dhcp-server, esto es NORMAL y se espera que pase, simplemente sigue con la instalacion"
+
 apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git
 
+read -p "Presiona intro para continuar"
+
+
+echo "Ahora se permite iniciar sesion con contraseña como root por ssh" >&2
 # Permite login del root en ssh
 cat /usr/share/openssh/sshd_config | sed 's/\#PermitRootLogin prohibit-password/PermitRootLogin yes/g' > /etc/ssh/sshd_config; systemctl restart sshd
+
+read -p "Presiona intro para continuar"
 
 
 
 # Copiar configs
-cp squid.conf /etc/squid/squid.conf
-cp interfaces /etc/network/interfaces
+cp squid.conf /etc/squid/squid.conf -rvf
 
+read -p "Presiona intro para continuar"
 
+echo "Haciendo IPTABLES"
 # Configura IPTABLES
 iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 iptables -t nat -A PREROUTING -i enp0s8 -p tcp --dport 80 -j REDIRECT --to-port 3128
 iptables -t nat -A PREROUTING -i enp0s8 -p tcp --dport 443 -j REDIRECT --to-port 3129
 
+
+read -p "Presiona intro para continuar"
+
+echo "Guardando las IPTABLES"
 # Guarda las IPTABLES
 netfilter-persistent save
 
+read -p "Presiona intro para continuar"
+
 
 # Crea todo lo que necesitamos para el SSL
+echo "Creando dirs squid proxy"
+
 mkdir -p /etc/squid/ssl_cert
 chown proxy:proxy /etc/squid/ssl_cert
 chmod 700 /etc/squid/ssl_cert
@@ -55,6 +84,10 @@ mkdir -p /var/lib/squid/
 /usr/lib/squid/security_file_certgen -c -s /var/lib/squid/ssl_db -M 4MB
 
 chown -R proxy:proxy /var/lib/squid/ssl_db
+
+
+
+read -p "Presiona intro para continuar"
 
 
 
@@ -111,7 +144,8 @@ EOF
 
 
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-systemctl restart isc-dhcp-server nginx php8.2-fpm
+systemctl restart isc-dhcp-server nginx php8.2-fpm squid
+# Solo teniamos que reiniciar squid :D
 
 
 # Copiamos el certificado para descarga
