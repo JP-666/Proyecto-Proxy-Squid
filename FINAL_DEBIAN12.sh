@@ -4,8 +4,8 @@
 
 if [[ $UID != 0 ]]
 then
-echo "Ejecutame como root!"
-exit
+	echo "Ejecutame como root!"
+	exit
 fi
 
 # Copiamos las cosas del sitio del "router"
@@ -22,7 +22,7 @@ sysctl -p
 read -p "Presiona intro para continuar"
 
 echo "Copiando y conf. red"
-cp interfaces /etc/network/interfaces -rvf
+cp cosas/interfaces /etc/network/interfaces -rvf
 systemctl restart networking
 
 # Instala
@@ -47,7 +47,7 @@ read -p "Presiona intro para continuar"
 
 
 # Copiar configs
-cp squid.conf /etc/squid/squid.conf -rvf
+cp cosas/squid.conf /etc/squid/squid.conf -rvf
 
 read -p "Presiona intro para continuar"
 
@@ -93,63 +93,24 @@ read -p "Presiona intro para continuar"
 
 
 
-# Configuramos el dhcp
+# Copiamos los archivos de conf.
 
+cd - # Volvemos a donde estabamos
 
+cp cosas/dhcp /etc/dhcp/dhcpd.conf -rvf
 
-cat << EOF > /etc/dhcp/dhcpd.conf
-ddns-update-style none;
-default-lease-time 600;
-max-lease-time 7200;
-authoritative;
+cp cosas/isc-default /etc/default/isc-dhcp-server -rvf
 
-subnet 10.0.0.0 netmask 255.255.255.0 {
-range 10.0.0.100 10.0.0.200;
-option domain-name-servers 8.8.8.8, 8.8.4.4;
-option domain-name "redinsti";
-option routers 10.0.0.1;
-option broadcast-address 10.0.0.255;
-default-lease-time 600;
-max-lease-time 7200;
-}
-EOF
-
-
-cat << EOF > /etc/default/isc-dhcp-server
-INTERFACESv4="enp0s8"
-INTERFACESv6=""
-EOF
-
-
-
-
-cat << EOF > /etc/nginx/sites-available/default
-server {
-listen 80 default_server;
-
-root /srv/;
-index index.php;
-
-location / {
-try_files \$uri \$uri/ =404;
-}
-
-location ~ \.php$ {
-include snippets/fastcgi-php.conf; # Esto es para php-fpm 8.2, la que viene con Debian 12, cambia a tu gusto.
-fastcgi_pass unix:/run/php/php8.2-fpm.sock;
-}
-
-}
-EOF
-
+cp cosas/sitio /etc/nginx/sites-available/default -rvf
 
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 cd /bin
 versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP encontrado!")
+
 systemctl restart isc-dhcp-server nginx $versionphp-fpm squid
 # Solo teniamos que reiniciar squid :D
 
 
 # Copiamos el certificado para descarga
-cp /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
+cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
