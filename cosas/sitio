@@ -1,0 +1,13 @@
+server {
+	listen 80 default_server;
+	root /srv/;
+	index index.php;
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+	# Esto es para php-fpm 8.2, la que viene con Debian 12, cambia esto a tu gusto.
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+	}
+}

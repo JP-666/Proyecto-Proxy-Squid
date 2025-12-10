@@ -1,0 +1,14 @@
+ddns-update-style none;
+default-lease-time 600;
+max-lease-time 7200;
+authoritative;
+
+subnet 10.0.0.0 netmask 255.255.255.0 {
+	range 10.0.0.100 10.0.0.200;
+	option domain-name-servers 8.8.8.8, 8.8.4.4;
+	option domain-name "redinsti";
+	option routers 10.0.0.1;
+	option broadcast-address 10.0.0.255;
+	default-lease-time 600;
+	max-lease-time 7200;
+}
