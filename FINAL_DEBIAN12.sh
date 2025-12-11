@@ -24,7 +24,20 @@ then
 	archdhcp=cosas/dhcp.custom
 fi
 
-
+read -p "¿Saldran los profesores al internet a traves del proxy, o no? [S/N] > " conf
+profesores=si
+case $conf in
+	S | s)
+		echo "La red de los profesores tambien pasara por el proxy"
+	;;
+	N | n)
+		echo "La red de los profesores **NO** pasara por el proxy"
+		profesores=no
+	;;
+	*)
+		echo "?? Se asume que si..."
+	;;
+esac
 
 # Copiamos las cosas del sitio del "router"
 echo "Copiando archivos" >&2

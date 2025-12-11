@@ -2,11 +2,28 @@ auto lo
 iface lo inet loopback
 
 
+# Red "Fuera"
 auto enp0s3
 iface enp0s3 inet dhcp
 
+# Red profesores (Sin restricciones)
 auto enp0s8
 iface enp0s8 inet static
   address 10.0.0.1
   netmask 255.255.255.0
   network 10.0.0.0
+
+# Red alumnos 1 (Clase 1)
+auto enp0s9
+iface enp0s9 inet static
+  address 172.16.1.1
+  netmask 255.255.255.0
+  network 172.16.1.0
+
+# Red alumnos 2 (Clase 2)
+auto enp0s10
+iface enp0s10 inet static
+  address 172.16.2.1
+  netmask 255.255.255.0
+  network 172.16.2.0
+
