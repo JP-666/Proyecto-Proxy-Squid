@@ -151,3 +151,4 @@ systemctl restart isc-dhcp-server nginx $versionphp-fpm squid
 
 # Copiamos el certificado para descarga
 cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
+ln -sf /srv/certi.pem /srv/alumnos/certi.pem
