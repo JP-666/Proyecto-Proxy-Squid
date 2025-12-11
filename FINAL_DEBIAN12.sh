@@ -124,7 +124,7 @@ cp cosas/sitio /etc/nginx/sites-available/default -rvf
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 cd /bin
-versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP encontrado!")
+versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP!")
 
 systemctl restart isc-dhcp-server nginx $versionphp-fpm squid
 # Solo teniamos que reiniciar squid :D
