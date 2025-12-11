@@ -12,3 +12,25 @@ subnet 10.0.0.0 netmask 255.255.255.0 {
 	default-lease-time 600;
 	max-lease-time 7200;
 }
+
+subnet 172.16.1.0 netmask 255.255.255.0 {
+	range 172.16.1.100 172.16.1.200;
+	option domain-name-servers 8.8.8.8, 8.8.4.4;
+	option domain-name "redinsti";
+	option routers 172.16.1.1;
+	option broadcast-address 172.16.1.255;
+	default-lease-time 600;
+	max-lease-time 7200;
+}
+
+subnet 172.17.2.0 netmask 255.255.255.0 {
+	range 172.17.2.100 172.17.2.200;
+	option domain-name-servers 8.8.8.8, 8.8.4.4;
+	option domain-name "redinsti";
+	option routers 172.17.2.1;
+	option broadcast-address 172.17.2.255;
+	default-lease-time 600;
+	max-lease-time 7200;
+}
+
+
