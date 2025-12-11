@@ -8,6 +8,24 @@ then
 	exit
 fi
 
+archint=cosas/interfaces
+archdhcp=cosas/dhcp
+
+if [[ -f "cosas/interfaces.custom" ]]
+then
+	echo "Se usaran las interfaces personalizadas"
+	archint=cosas/interfaces.custom
+fi
+
+
+if [[ -f "cosas/dhcp.custom" ]]
+then
+	echo "Se usaran los ajustes de dhcp personalizados"
+	archdhcp=cosas/dhcp.custom
+fi
+
+
+
 # Copiamos las cosas del sitio del "router"
 echo "Copiando archivos" >&2
 cp -rvf srv / >&2
@@ -22,7 +40,7 @@ sysctl -p
 read -p "Presiona intro para continuar"
 
 echo "Copiando y conf. red"
-cp cosas/interfaces /etc/network/interfaces -rvf
+cp $archint /etc/network/interfaces -rvf
 systemctl restart networking
 
 # Instala
@@ -97,7 +115,7 @@ read -p "Presiona intro para continuar"
 
 cd - # Volvemos a donde estabamos
 
-cp cosas/dhcp /etc/dhcp/dhcpd.conf -rvf
+cp $archdchp /etc/dhcp/dhcpd.conf -rvf
 
 cp cosas/isc-default /etc/default/isc-dhcp-server -rvf
 
