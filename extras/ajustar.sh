@@ -1,5 +1,6 @@
 #!/bin/bash
 # Cambia cosas para ajustarse a los requisitos
+# Tienes que estar en la carpeta raiz del proyecto!
 
 IP=192.168.1.1
 NETWORK=192.168.1.0
@@ -13,7 +14,7 @@ sed "s/10.0.0.1/$IP/g" < cosas/interfaces > cosas/interfaces.custom
 
 
 
-
+# Un solo > para sobreescribir la conf. antigua (Si existe)
 echo "ddns-update-style none;" > cosas/dhcp.custom
 echo "default-lease-time 600;" >> cosas/dhcp.custom
 echo "max-lease-time 7200;" >> cosas/dhcp.custom
