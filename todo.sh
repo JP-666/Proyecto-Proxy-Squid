@@ -112,7 +112,20 @@ chown proxy:proxy /etc/squid/ssl_cert
 chmod 700 /etc/squid/ssl_cert
 cd /etc/squid/ssl_cert
 
-openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -keyout squid_ca.key -out squid_ca.pem -sha256 -subj "/C=ES/ST=Cadiz/L=Cadiz/O=Instituto/OU=squidinstituto/CN=CERTIFICADO PARA SSL DE SQUID DEL INSTITUTO"
+pais=ES
+reg=Andalucia
+ins=Instituto
+org=squidinstituto
+extra="CERTIFICADO PARA SSL DE SQUID DEL INSTITUTO"
+read -p "Pais ? (Corto, p.e: ES) ? > " pais
+read -p "Region ? (p.e: Andalucia) ? > " reg
+read -p "Institucion ? (p.e: Instituto) ? > " ins
+read -p "Organizacion ? (p.e: InstitutoXYZ) ? > " org
+read -p "Extra ? (p.e: Mi certificado para lo que sea) ? > " extra
+
+
+
+openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -keyout squid_ca.key -out squid_ca.pem -sha256 -subj "/C=$pais/ST=$reg/L=$reg/O=$ins/OU=$org/CN=$extra"
 
 chown proxy:proxy *
 
