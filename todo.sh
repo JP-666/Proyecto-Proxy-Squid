@@ -1,12 +1,45 @@
 #!/bin/bash
 
-# Ejecuta como root!
+# ¡Ejecuta como root!
 
 if [[ $UID != 0 ]]
 then
 	echo "Ejecutame como root!"
 	exit
 fi
+
+read -p "¿Quieres personalizar la configuración [S/N]> ?" opc
+
+case $opc in
+	S | s)
+		echo "Se procede a personalizar los archivos."
+		read -p "Quieres cambiar las direcciones IPs (Esto cambia la config. del dhcp, las interfaces de red, la configuracion del sitio de nginx y la de squid)> " opc
+		case $opc in
+			S | s)
+				echo "Ahora se procede a cambiar las direcciones IP del proyecto"
+				red1="10.0.0.0"
+				ip1="10.0.0.1"
+				read -p "Red 1 ? (10.0.0.0)" red1
+				read -p "IP 1 ? (10.0.0.1)" ip1
+
+
+			;;
+			N | n)
+				echo "Saltando la config. IP"
+			;;
+			*)
+				echo "?? Se asume que no... Se salta la config. IP"
+			;;
+esac
+	;;
+	N | n)
+		echo "Usando confs. por defecto"
+	;;
+	*)
+		echo "?? Se asume que no..."
+	;;
+esac
+
 
 archint=cosas/interfaces
 archdhcp=cosas/dhcp
