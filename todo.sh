@@ -134,7 +134,7 @@ read -p "Presiona intro para continuar"
 
 cd - # Volvemos a donde estabamos
 
-cp $archdchp /etc/dhcp/dhcpd.conf -rvf
+cp $archdhcp /etc/dhcp/dhcpd.conf -rvf
 
 cp cosas/isc-default /etc/default/isc-dhcp-server -rvf
 
