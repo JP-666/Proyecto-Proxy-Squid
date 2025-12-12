@@ -8,7 +8,7 @@ then
 	exit
 fi
 
-read -p "¿Quieres personalizar la configuración [S/N]> ?" opc
+read -p "¿Quieres personalizar la configuración [S/N]> ? " opc
 
 case $opc in
 	S | s)
@@ -19,8 +19,8 @@ case $opc in
 				echo "Ahora se procede a cambiar las direcciones IP del proyecto"
 				red1="10.0.0.0"
 				ip1="10.0.0.1"
-				read -p "Red 1 ? (10.0.0.0)" red1
-				read -p "IP 1 ? (10.0.0.1)" ip1
+				read -p "Red 1 ? (10.0.0.0) " red1
+				read -p "IP 1 ? (10.0.0.1) " ip1
 
 
 			;;
