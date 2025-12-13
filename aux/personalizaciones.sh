@@ -5,7 +5,7 @@ read -p "¿Quieres personalizar la red 1 (Profesores) [S/N]> ? " opc
 
 case $opc in
 	S | s)
-		cosas/generar_red.sh 1 10.0.0.1 enp0s8 10.0.0.0 255.255.255.0
+		aux/generar_red.sh 1 10.0.0.1 enp0s8 10.0.0.0 255.255.255.0
 	;;
 	N | n)
 		echo "auto lo" > cosas/interfaces.custom
@@ -19,7 +19,7 @@ case $opc in
 	;;
 	*)
 		echo "Asumiendo si"
-		cosas/generar_red.sh 1 10.0.0.1 enp0s8 10.0.0.0 255.255.255.0
+		aux/generar_red.sh 1 10.0.0.1 enp0s8 10.0.0.0 255.255.255.0
 	;;
 esac
 
@@ -28,7 +28,7 @@ read -p "¿Quieres personalizar la red 2 (Alumnos 1) [S/N]> ? " opc2
 
 case $opc in
 	S | s)
-		cosas/generar_red.sh 2 172.16.1.1 enp0s9 172.16.1.0 255.255.255.0
+		aux/generar_red.sh 2 172.16.1.1 enp0s9 172.16.1.0 255.255.255.0
 	;;
 	N | n)
 		echo "auto enp0s9" >> cosas/interfaces.custom
@@ -38,7 +38,7 @@ case $opc in
 		echo "	network 172.16.1.0" >> cosas/interfaces.custom
 	;;
 	*)
-		cosas/generar_red.sh 2 172.16.1.1 enp0s9 172.16.1.0 255.255.255.0
+		aux/generar_red.sh 2 172.16.1.1 enp0s9 172.16.1.0 255.255.255.0
 		echo "Asumiendo si"
 	;;
 esac
@@ -48,7 +48,7 @@ read -p "¿Quieres personalizar la red 3 (Alumnos 2) [S/N]> ? " opc3
 
 case $opc in
 	S | s)
-		cosas/generar_red.sh 3 172.16.2.1 enp0s10 172.16.2.0 255.255.255.0
+		aux/generar_red.sh 3 172.16.2.1 enp0s10 172.16.2.0 255.255.255.0
 	;;
 	N | n)
 		echo "auto enp0s10" >> cosas/interfaces.custom
@@ -59,7 +59,7 @@ case $opc in
 	;;
 	*)
 		echo "Asumiendo si"
-		cosas/generar_red.sh 3 172.16.2.1 enp0s10 172.16.2.0 255.255.255.0
+		aux/generar_red.sh 3 172.16.2.1 enp0s10 172.16.2.0 255.255.255.0
 	;;
 esac
 

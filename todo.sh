@@ -54,19 +54,19 @@ fi
 if [[ $error ]]
 then
 	read -p "Se han producido errores, quieres continuar de todos modos? [S/(N)] > " cont1
+
+
+	case $cont1 in
+		S | s)
+			echo "Asegurate de arreglar los problemas luego! Se han enviado a tu carpeteta personal"
+			source aux/personalizaciones.sh
+		;;
+		*)
+			echo "Saliendo, comprueba los errores en tu carpeta personal"
+			exit
+		;;
+	esac
 fi
-
-case $opc in
-	S | s)
-		echo "Asegurate de arreglar los problemas luego! Se han enviado a tu carpeteta personal"
-		source aux/personalizaciones.sh
-	;;
-	*)
-		echo "Saliendo, comprueba los errores en tu carpeta personal"
-		exit
-	;;
-esac
-
 
 
 read -p "¿Quieres personalizar la configuración [S/N]> ? " opc
