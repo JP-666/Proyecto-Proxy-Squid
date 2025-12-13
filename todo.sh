@@ -87,6 +87,9 @@ esac
 
 archint=cosas/interfaces
 archdhcp=cosas/dhcp
+archsitio=cosas/sitio
+archsquid=cosas/squid.conf
+
 
 if [[ -f "cosas/interfaces.custom" ]]
 then
@@ -116,9 +119,28 @@ case $conf in
 	;;
 esac
 
-# Copiamos las cosas del sitio del "router"
-echo "Copiando archivos" >&2
-cp -rvf srv / >&2
+
+read -p "¿Instalar interfaz de config.? [(S)/N]> ? " ifazcon
+interfaz=si
+case $ifazcon in
+	N | n)
+		echo "Ok, no se configurara la interfaz de administracion"
+		interfaz=no
+	;;
+	*) # (no no = si) Copiamos las cosas del sitio del "router"
+		read -p "Permitir a los alumnos acceder a la interfaz de configuracion? [S/(N)] > ? " aluconf
+		case $aluconf in
+			S | s)
+				echo "OK, aunque no deberias hacer esto."
+				archsitio=cosas/sitio-ifazconfalum
+				archsquid=cosas/squidal_profs
+			;;
+		echo "Copiando archivos" >&2
+		cp -rvf srv / >&2
+		esac
+	;;
+esac
+
 
 read -p "Presiona intro para continuar"
 
@@ -155,7 +177,7 @@ read -p "Presiona intro para continuar"
 
 
 # Copiar configs
-cp cosas/squid.conf /etc/squid/squid.conf -rvf
+cp $archsquid /etc/squid/squid.conf -rvf
 
 read -p "Presiona intro para continuar"
 
@@ -219,7 +241,6 @@ read -p "Presiona intro para continuar"
 
 
 
-
 # Copiamos los archivos de conf.
 
 cd - # Volvemos a donde estabamos
@@ -228,7 +249,7 @@ cp $archdhcp /etc/dhcp/dhcpd.conf -rvf
 
 cp cosas/isc-default /etc/default/isc-dhcp-server -rvf
 
-cp cosas/sitio /etc/nginx/sites-available/default -rvf
+cp $archsitio /etc/nginx/sites-available/default -rvf
 
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 

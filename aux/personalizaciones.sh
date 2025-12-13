@@ -64,7 +64,10 @@ case $opc in
 esac
 
 
-
+# Queda:
+#	- Script que cambie las configs. del DHCP (sed/grep?) (Python?? con sub_string??)
+#	- Exportar variables (Por si las moscas) al script principal, o al terminal, si no estamos en un subscript.
+#	- Conf. de NGINX (Cambiar los "routers" de alumnos y de profesores con las IPs de 1. 
 
 
 echo ""
