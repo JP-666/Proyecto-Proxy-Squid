@@ -8,12 +8,22 @@ then
 	exit
 fi
 
+if [[ ! $(basename $PWD) == "Proyecto-Proxy-Squid" ]]
+then
+	echo "Estas en la carpeta del proyecto?"
+	echo "basename $PWD != Proyecto-Proxy-Squid"
+	echo "Script en $(dirname $(which $0))"
+	exit
+fi
+
+
+
 read -p "¿Quieres personalizar la configuración [S/N]> ? " opc
 
 case $opc in
 	S | s)
 		echo "Se procede a personalizar los archivos."
-		$SHELL ./personalizaciones.sh
+		source aux/personalizaciones.sh
 	;;
 	N | n)
 		echo "Usando confs. por defecto"
