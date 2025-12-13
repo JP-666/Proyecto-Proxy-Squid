@@ -13,19 +13,7 @@ read -p "¿Quieres personalizar la configuración [S/N]> ? " opc
 case $opc in
 	S | s)
 		echo "Se procede a personalizar los archivos."
-		read -p "Quieres cambiar las direcciones IPs (Esto cambia la config. del dhcp, las interfaces de red, la configuracion del sitio de nginx y la de squid)> " opc
-		case $opc in
-			S | s)
-				echo "Ahora se procede a cambiar las direcciones IP del proyecto"
-				$SHELL ./personalizaciones.sh
-			;;
-			N | n)
-				echo "Saltando la config. IP"
-			;;
-			*)
-				echo "?? Se asume que no... Se salta la config. IP"
-			;;
-esac
+		$SHELL ./personalizaciones.sh
 	;;
 	N | n)
 		echo "Usando confs. por defecto"
