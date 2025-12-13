@@ -16,6 +16,57 @@ then
 	exit
 fi
 
+if [[ ! -f "cosas/dhcp" ]]
+then
+	echo " - Falta la config del dhcp!"
+	echo "FALTA cosas/dhcp (!)" >> $HOME/error.log
+	error=true
+fi
+
+if [[ ! -f "cosas/interfaces" ]]
+then 
+	echo " - Falta la config de las interfaces!"
+	echo "FALTA cosas/interfaces (!)" >> $HOME/error.log
+	error=true
+fi
+
+if [[ ! -f "cosas/isc-default" ]]
+then 
+	echo " - Faltan los valores default del isc!!"
+	echo "FALTA cosas/isc-default (!)" >> $HOME/error.log
+	error=true
+fi
+
+if [[ ! -f "cosas/sitio" ]]
+then 
+	echo " - Falta la config del sitio de nginx!"
+	echo "FALTA cosas/sitio (!)" >> $HOME/error.log
+	error=true
+fi
+
+if [[ ! -f "cosas/squid.conf" ]]
+then 
+	echo " - Falta la config del squid!"
+	echo "FALTA cosas/squid.conf (!)" >> $HOME/error.log
+	error=true
+fi
+
+if [[ $error ]]
+then
+	read -p "Se han producido errores, quieres continuar de todos modos? [S/(N)] > " cont1
+fi
+
+case $opc in
+	S | s)
+		echo "Asegurate de arreglar los problemas luego! Se han enviado a tu carpeteta personal"
+		source aux/personalizaciones.sh
+	;;
+	*)
+		echo "Saliendo, comprueba los errores en tu carpeta personal"
+		exit
+	;;
+esac
+
 
 
 read -p "¿Quieres personalizar la configuración [S/N]> ? " opc
