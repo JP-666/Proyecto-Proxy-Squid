@@ -1,3 +1,4 @@
+#!/bin/bash
 
 read -p "¿Instalar interfaz de config.? [(S)/N]> ? " ifazcon
 	case $ifazcon in
