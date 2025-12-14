@@ -11,7 +11,8 @@ then
 	echo "##########################################################################################"
 	echo "##########################################################################################"
 	export noroot=true
-	echo
+	echo "RECUERDA ARRANCAR ESTO CON source $0 PARA GUARDAR LAS CONFIGS PARA USARLAS LUEGO"
+	sleep 1
 fi
 
 
@@ -55,31 +56,44 @@ read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ?
 				echo "En el script anterior has seleccionado **NO** instalar la interfaz de config. Esto significa que NO se instalara nginx ni php ni se configurara el sitio."
 			fi
 			echo
-			while true
-			do
-				echo "Parece que todo esta listo, ahora voy a dejar que edites los archivos a tu medida, escribe el nombre del archivo o escribe \"salir\" para salir del bucle"
-				echo
-				ls cosas/*.custom
-				echo
-				read -p "Archivo o salir ? > " editar
-				if [[ $editar == "salir" ]]
-				then
-					break
-				fi
-				
-				if [[ ! -f cosas/$editar ]]
-				then
+			read -p '¿Quieres cambiar algo [S/(N)]? > ' editar
+			if [[ $editar == "S" ]]
+			then
+				while true
+				do
+					echo "Parece que todo esta listo, ahora voy a dejar que edites los archivos a tu medida, escribe el nombre del archivo o escribe \"salir\" para salir del bucle"
 					echo
-					echo "Whoops, eso no ha funcionado (No existe el archivo)"
+					ls cosas/*.custom
 					echo
-				else
-					nano cosas/$editar
-				fi
-			done
+					read -p "Archivo o salir ? > " editar
+					if [[ $editar == "salir" ]]
+					then
+						break
+					fi
+					if [[ ! -f cosas/$editar ]]
+					then
+						echo
+						echo "Whoops, eso no ha funcionado (No existe el archivo)"
+						echo
+					else
+						nano cosas/$editar
+					fi
+				done
+			fi
 			echo
 			echo "Ahora se generara la config de squid (basada en tus respuestas)"
 			echo
 			source aux/generar_squid.sh
+			echo
+			if [[ $noroot == "true" ]]
+			then
+				echo
+				echo "No se pueden hacer algunas configuraciones, no eres root"
+				echo
+				echo "Ejecuta el script \"root.sh\" como superusuario para continuar con la instalacion, esto solo funcionara si has ejecutado este script con >>> source $0"
+			else
+				source root.sh
+			fi
 		;;
 		*)
 			echo "Perfecto entonces, se instalara todo con las configuracion por defecto!"
