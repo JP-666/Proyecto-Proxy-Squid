@@ -13,6 +13,10 @@ read -p "¿Instalar interfaz de config.? [(S)/N]> ? " ifazcon
 					echo "OK, aunque no deberias hacer esto."
 					export archsitio=cosas/sitio-ifazconfalum
 					export archsquid=cosas/squidal_profs
+					export aluconf="si"
+				;;
+				*)
+					export aluconf="no"
 				;;
 			esac
 			echo "Copiando archivos" >&2

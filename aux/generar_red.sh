@@ -54,6 +54,8 @@ while true; do
 			echo "	netmask $nms" >> cosas/interfaces.custom
 			echo "	network $dir" >> cosas/interfaces.custom
 			echo ""
+			export red$1=$dir
+			export router$1=$ip
 			break;;
 		[Nn]* )
 			echo "Intenta de nuevo";;

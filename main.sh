@@ -76,11 +76,15 @@ read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ?
 					nano cosas/$editar
 				fi
 			done
+			echo
+			echo "Ahora se generara la config de squid (basada en tus respuestas)"
+			echo
+			source aux/generar_squid.sh
 		;;
 		*)
 			echo "Perfecto entonces, se instalara todo con las configuracion por defecto!"
 			echo "Buena suerte!"
-			source todo-final.sh
+			source pordefecto.sh
 		;;
 	esac
 
