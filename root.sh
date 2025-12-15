@@ -17,19 +17,20 @@ fi
 
 if [[ ! -v interfaz ]]
 then
-        echo
-        echo "Falta la variable profesores"
-        echo "  - Este error no es fatal"
-        echo "  - Se continua la ejecucion"
-        echo
+	echo
+	echo "Falta la variable profesores"
+	echo "  - Este error no es fatal"
+	echo "  - Se continua la ejecucion"
+	echo
 fi
 
 
 if [[ ! -v aluconf ]]
+then
 	echo "Falta la variable aluconf"
-        echo "  - Este error no es fatal"
-        echo "  - Se continua la ejecucion"
-        echo
+	echo "  - Este error no es fatal"
+	echo "  - Se continua la ejecucion"
+	echo
 fi
 
 
