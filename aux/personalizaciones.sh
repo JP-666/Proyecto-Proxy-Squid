@@ -35,7 +35,7 @@ case $opc2 in
 		export red2=172.16.1.0
 	;;
 	*)
-		source aux/generar_red.sh 2 172.16.1.1 enp0s10 172.16.1.0 255.255.255.0
+		source aux/generar_red.sh 2 172.16.1.1 enp0s9 172.16.1.0 255.255.255.0
 		aux/generar_dhcp.sh $ip $dir $nms --append
 	;;
 esac
