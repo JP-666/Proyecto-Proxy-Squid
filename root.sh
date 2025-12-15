@@ -98,12 +98,13 @@ echo "[10] Conf. dhcp"
 cp $archdhcp /etc/dhcp/dhcpd.conf -rvf
 cp cosas/isc-default /etc/default/isc-dhcp-server -rvf
 systemctl restart isc-dhcp-server
-if [[ ! $interfaz == "no" ]]
+# A lo mejor lo de NGINX se podria mover fuera, a su propio script.
+if [[ ! $interfaz == "no" ]] 
 then
 	echo "[11] Conf. Nginx"
-	rm -rvf /etc/nginx/sites-enabled/default /etc/nginx/sites-avalible/default
-	cp -rvf $archsitio /etc/nginx/sites-avalible/default
-	ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+	rm -rvf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
+	cp -rvf $archsitio /etc/nginx/sites-enabled/default
+	cp -rvf $archsitio /etc/nginx/sites-available/default
 	cd /bin
 	versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP!")
 	cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
