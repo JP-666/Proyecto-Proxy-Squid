@@ -1,3 +1,48 @@
+#!/bin/bash
+if [[ $UID != 0 ]]
+then
+	echo "Entra como root!"
+	exit
+fi
+
+if [[ ! -v profesores ]]
+then
+	echo
+	echo "Falta la variable profesores"
+	echo "	- Este error no es fatal"
+	echo "	- Se continua la ejecucion"
+	echo
+fi
+
+
+if [[ ! -v interfaz ]]
+then
+        echo
+        echo "Falta la variable profesores"
+        echo "  - Este error no es fatal"
+        echo "  - Se continua la ejecucion"
+        echo
+fi
+
+
+if [[ ! -v aluconf ]]
+	echo "Falta la variable aluconf"
+        echo "  - Este error no es fatal"
+        echo "  - Se continua la ejecucion"
+        echo
+fi
+
+
+
+if [[ fallo ]]
+then
+	echo "Han fallado algunas comprobaciones de variables, por favor, comprueba los mensajes de arriba"
+	fallo=false
+	exit
+fi
+
+
+read -p "Este script va a realizar cambios en tu sistema, asegurate detenidamente que todo esta correcto antes de continuar, sal del script (CTRL-C) para salir a la shell, presionar enter para continuar "
 echo
 echo "[1] Instalacion"
 echo
