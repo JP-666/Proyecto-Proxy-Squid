@@ -35,6 +35,8 @@ fi
 
 
 
+# Si tenemos alguna variable que SEA necesaria si o si, la metemos aqui, si falla, ponemos "fallo" a "true", parece ser que bash no nos permite simplemente usar if (lo que sea) true
+
 if [[ fallo == "true" ]]
 then
 	echo "Han fallado algunas comprobaciones de variables, por favor, comprueba los mensajes de arriba"
