@@ -101,6 +101,8 @@ systemctl restart isc-dhcp-server
 if [[ ! $interfaz == "no" ]]
 then
 	echo "[11] Conf. Nginx"
+	rm -rvf /etc/nginx/sites-enabled/default /etc/nginx/sites-avalible/default
+	cp -rvf $archsitio /etc/nginx/sites-avalible/default
 	ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 	cd /bin
 	versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP!")
