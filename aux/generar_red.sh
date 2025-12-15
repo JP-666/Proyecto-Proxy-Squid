@@ -9,6 +9,8 @@ then
 	echo "auto lo" > cosas/interfaces.custom
 	echo "iface lo inet loopback" >> cosas/interfaces.custom
 	echo "" >> cosas/interfaces.custom
+	echo "auto enp0s3" >> cosas/interfaces.custom
+	echo "iface enp0s3 inet dhcp" >> cosas/interfaces.custom
 fi
 
 
