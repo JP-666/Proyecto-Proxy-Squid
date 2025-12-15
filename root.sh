@@ -35,7 +35,7 @@ fi
 
 
 
-if [[ fallo ]]
+if [[ fallo == "true" ]]
 then
 	echo "Han fallado algunas comprobaciones de variables, por favor, comprueba los mensajes de arriba"
 	fallo=false
