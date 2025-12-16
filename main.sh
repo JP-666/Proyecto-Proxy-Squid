@@ -13,6 +13,7 @@ then
 	export noroot=true
 	echo "RECUERDA ARRANCAR ESTO CON source $0 PARA GUARDAR LAS CONFIGS PARA USARLAS LUEGO"
 	sleep 1
+	echo "Se guardaran las variables en \"variables.sh\""
 fi
 
 
@@ -91,6 +92,7 @@ read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ?
 				echo "No se pueden hacer algunas configuraciones, no eres root"
 				echo
 				echo "Ejecuta el script \"root.sh\" como superusuario para continuar con la instalacion, esto solo funcionara si has ejecutado este script con >>> source $0"
+				aux/gen_variables.sh
 			else
 				source root.sh
 			fi
