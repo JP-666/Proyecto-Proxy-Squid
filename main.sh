@@ -98,9 +98,13 @@ read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ?
 			fi
 		;;
 		*)
-			echo "Perfecto entonces, se instalara todo con las configuracion por defecto!"
-			echo "Buena suerte!"
-			source pordefecto.sh
+			if [[ $noroot == "true" ]]
+				echo "¡No te puedo dejar que continues sin superusuario!"
+			else
+				echo "Perfecto entonces, se instalara todo con las configuracion por defecto!"
+				echo "¡Buena suerte!"
+				source pordefecto.sh
+			fi
 		;;
 	esac
 
