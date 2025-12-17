@@ -99,6 +99,7 @@ read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ?
 		;;
 		*)
 			if [[ $noroot == "true" ]]
+			then
 				echo "¡No te puedo dejar que continues sin superusuario!"
 			else
 				echo "Perfecto entonces, se instalara todo con las configuracion por defecto!"
