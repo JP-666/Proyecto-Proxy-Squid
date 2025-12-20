@@ -8,8 +8,38 @@ then
 	exit
 fi
 
-apt install freeradius freeradius-mysql -y
+apt install freeradius freeradius-mysql mariadb-common mariadb-server -y
 
 cp -rvf cosas/radius-sitio-default /etc/freeradius/3.0/sites-enabled/default
 cp -rvf cosas/radius-eap /etc/freeradius/3.0/mods-enabled/eap
 cp -rvf cosas/sqlconfradius /etc/freeradius/3.0/mods-enabled/sql
+
+mysql -e "CREATE DATABASE baseradius;"
+mysql -e "CREATE USER 'Fran' IDENTIFIED BY 'FranPassword';"
+mysql -e "GRANT ALL ON baseradius.* TO 'Fran';"
+mysql -e "FLUSH PRIVILEGES;"
+
+
+for i in {1..5}; # 5 profesores
+do
+	PROF=prof$i
+	CONT=$RANDOM$RANDOM$RANDOM
+	echo "Agregando usuario $PROF con contraseña $CONT"
+	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$PROF', 'Cleartext-Password', ':=', '$CONT');"
+done
+i=0 # Reseteamos $i
+
+for i in {1..50}; # 50 alumnos
+do
+	ALM=alum$i
+	CONT=$RANDOM$RANDOM$RANDOM
+	echo "Agregando usuario $ALM con contraseña $CONT"
+	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$ALM', 'Cleartext-Password', ':=', '$CONT');"
+done
+exit
+
+
+
+
+
+systemctl restart freeradius
