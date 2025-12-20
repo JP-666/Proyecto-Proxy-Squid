@@ -15,7 +15,7 @@ fi
 
 
 arc=$(uname --machine)
-if [[ ! $arc == "arm64" ]]
+if [[ ! $arc == "aarch64" ]]
 then
 	echo "Este script esta pensado para dispositivos con ARM64!"
 	if [[ $arc == "x86_64" ]]
