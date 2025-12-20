@@ -18,7 +18,7 @@ mysql -e "CREATE DATABASE baseradius;"
 mysql -e "CREATE USER 'Fran' IDENTIFIED BY 'FranPassword';"
 mysql -e "GRANT ALL ON baseradius.* TO 'Fran';"
 mysql -e "FLUSH PRIVILEGES;"
-
+mysql -D baseradius < /etc/freeradius/3.0/mods-config/sql/main/mysql/schema.sql
 
 for i in {1..5}; # 5 profesores
 do
