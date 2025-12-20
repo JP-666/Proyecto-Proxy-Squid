@@ -1,0 +1,72 @@
+server default {
+    listen {
+        type = auth
+        ipaddr = *
+        port = 0
+    }
+
+    listen {
+        type = acct
+        ipaddr = *
+        port = 0
+    }
+
+    # -- AUTHORIZE SECTION --
+    # This section determines how the user is "identified"
+    authorize {
+        filter_username
+
+        # 1. Look up the user in your 'radcheck' table immediately.
+        # This will find 'alum18' and retrieve the 'Cleartext-Password'.
+        -sql
+
+        # 2. Handle the EAP negotiation.
+        # Since we are skipping the inner-tunnel, this will use 
+        # the password found by SQL to authenticate.
+        eap {
+            ok = return
+        }
+
+        # Fallback to standard PAP/MS-CHAP if EAP is not used
+        pap
+        mschap
+    }
+
+    # -- AUTHENTICATE SECTION --
+    # This section handles the actual "math" of checking the password
+    authenticate {
+        # This handles EAP methods like GTC or MD5 directly
+        eap
+
+        Auth-Type PAP {
+            pap
+        }
+
+        Auth-Type MS-CHAP {
+            mschap
+        }
+    }
+
+    # -- POST-AUTH SECTION --
+    # Things to do after the user is accepted or rejected
+    post-auth {
+        # Update SQL with the authentication result
+        -sql
+
+        # Remove redundant EAP messages from the response
+        remove_reply_message_if_eap
+
+        Post-Auth-Type REJECT {
+            -sql
+            attr_filter.access_reject
+        }
+    }
+
+    # -- ACCOUNTING SECTION --
+    # Logs when the user connects and disconnects
+    accounting {
+        detail
+        -sql
+        exec
+    }
+}
