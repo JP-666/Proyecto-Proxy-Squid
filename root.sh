@@ -116,3 +116,5 @@ then
 else
 	echo "Se ha saltado la instalacion de NGINX, tal como has pedido"
 fi
+echo "[12] Haciendo RADIUS"
+aux/radius.sh
