@@ -20,7 +20,6 @@ read -p "¿Instalar interfaz de config.? [(S)/N]> ? " ifazcon
 				;;
 			esac
 			echo "Copiando archivos" >&2
-			cp -rvf srv / >&2
 		;;
 	esac
 
