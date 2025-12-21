@@ -92,17 +92,30 @@
 
 			<h1> Cambiar contraseñas o crear usuarios RADIUS (SQL) </h1>
 			<form action="cambiar.php" method="POST">
-			<fieldset>
-			<label for="usuariobaserad">Usuario</label>
-			<input type="text" id="usuariobaserad" name="usuariobaserad">
-			</br>
-			<label for="contbaserad">Contraseña</label>
-			<input type="text" id="contbaserad" name="contbaserad">
-			</br>
-			<input type="submit" value="OK">
-			</fieldset>
+				<fieldset>
+					<label for="usuariobaserad">Usuario</label>
+					<input type="text" id="usuariobaserad" name="usuariobaserad">
+					</br>
+					<label for="contbaserad">Contraseña</label>
+					<input type="text" id="contbaserad" name="contbaserad">
+					</br>
+					<input type="submit" value="OK">
+				</fieldset>
 			</form>
 
+
+			<h1> Cambiar contraseña interfaz de usuario (Esta paǵina) </h1>
+			<form action="contra.php" method="POST">
+				<fieldset>
+					<label for="contra">Nueva contraseña</label>
+					<input type="text" id="contra" name="contra">
+					</br>
+					<label for="salir">Salir tambien</label>
+					<input type="checkbox" id="salir" name="salir" value="salir">
+					</br>
+					<input type="submit" value="OK">
+				</fieldset>
+			</form>
 
 
 
