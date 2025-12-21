@@ -91,13 +91,13 @@
 <!-- El resto de cosas que "puede hacer el admin" -->
 
 			<h1> Cambiar contraseñas o crear usuarios RADIUS (SQL) </h1>
-			<form action="cambiar.php" action="POST">
+			<form action="cambiar.php" method="POST">
 			<fieldset>
 			<label for="usuariobaserad">Usuario</label>
-			<input type="text" id="usuariobaserad">
+			<input type="text" id="usuariobaserad" name="usuariobaserad">
 			</br>
 			<label for="contbaserad">Contraseña</label>
-			<input type="text" id="contbaserad">
+			<input type="text" id="contbaserad" name="contbaserad">
 			</br>
 			<input type="submit" value="OK">
 			</fieldset>
