@@ -1,4 +1,7 @@
 #!/bin/bash
+
+source aux/gen_acl.sh
+
 echo > cosas/squid.custom
 
 if [[ $profesores == "no" ]]
@@ -24,6 +27,13 @@ echo "# Opcion: Red alumnos 2: $red3" >> cosas/squid.custom
 
 
 echo "" >> cosas/squid.custom
+if [[ -f cosas/acl ]]
+then
+	echo "acl blocked_domains dstdomain \"/etc/squid/acl.txt\"" >> cosas/squid.custom
+fi
+
+
+echo "" >> cosas/squid.custom
 
 if [[ ! $profesores == "no" ]]
 then
@@ -46,15 +56,23 @@ echo "sslcrtd_program /usr/lib/squid/security_file_certgen -s /var/lib/squid/ssl
 echo "acl step1 at_step SslBump1" >> cosas/squid.custom
 echo "ssl_bump peek step1" >> cosas/squid.custom
 echo "ssl_bump bump all" >> cosas/squid.custom
+
 if [[ $aluconf == "no" ]]
 then
 	echo "http_access deny iprouterprofesores clase1" >> cosas/squid.custom
 	echo "http_access deny iprouterprofesores clase2" >> cosas/squid.custom
 fi
+
 if [[ ! $profesores == "no" ]]
 then
 	echo "http_access allow localnet" >> cosas/squid.custom
 fi
+
+if [[ -f cosas/acl ]]
+then
+	echo "http_access deny blocked_domains" >> cosas/squid.custom
+fi
+
 echo "http_access allow clase1" >> cosas/squid.custom
 echo "http_access allow clase2" >> cosas/squid.custom
 echo "http_access deny all" >> cosas/squid.custom

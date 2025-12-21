@@ -88,6 +88,7 @@ cp $archint /etc/network/interfaces -rvf
 echo " - Reiniciando red"
 systemctl restart networking
 echo "[8] Copiando squid"
+if [[ -f cosas/acl ]]; then cp -rvf cosas/acl /etc/squid/acl.txt; fi
 cp $archsquid /etc/squid/squid.conf -rvf
 echo "[9] Creando certificados"
 echo

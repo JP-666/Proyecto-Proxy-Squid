@@ -26,9 +26,9 @@ done
 
 nano cosas/acl
 
-if [[ $UID != 0 ]]
-then
-	echo "No se puede copiar, no eres superusuario, se ha guardado el archivo"
-else
-	cp -rvf cosas/acl /etc/squid/acl.txt
-fi
+#if [[ $UID != 0 ]]
+#then
+#	echo "No se puede copiar, no eres superusuario, se ha guardado el archivo"
+#else
+#	cp -rvf cosas/acl /etc/squid/acl.txt
+#fi
