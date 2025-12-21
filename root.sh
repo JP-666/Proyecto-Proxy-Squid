@@ -62,10 +62,10 @@ echo "[3] SSH - Root"
 read -p 'Permitir conexiones SSH como superusuario con contraseña  -> [(S)/N] ? ' sup
 case $sup in
 	N | n)
-		$SHELL aux/rootssh.sh # No tenemos que sourcearlo, no tiene ninguna variable ni nada
+		echo "Continuando sin permitir login como root con contraseña..."
 	;;
 	*)
-		echo "Continuando sin permitir login como root con contraseña..."
+		$SHELL aux/rootssh.sh # No tenemos que sourcearlo, no tiene ninguna variable ni nada
 	;;
 esac
 echo "[4] Forwarding"
