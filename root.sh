@@ -101,9 +101,11 @@ cp $archdhcp /etc/dhcp/dhcpd.conf -rvf
 cp cosas/isc-default /etc/default/isc-dhcp-server -rvf
 systemctl restart isc-dhcp-server
 # A lo mejor lo de NGINX se podria mover fuera, a su propio script.
-if [[ ! $interfaz == "no" ]] 
+if [[ ! $interfaz == "no" ]]
 then
 	echo "[11] Conf. Nginx"
+	# Faltaba esto!! El SQL en PHP
+	apt install php-mysql
 	rm -rvf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
 	cp -rvf $archsitio /etc/nginx/sites-enabled/default
 	cp -rvf $archsitio /etc/nginx/sites-available/default
@@ -111,6 +113,7 @@ then
 	versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP!")
 	cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
 	ln -sf /srv/certi.pem /srv/alumnos/certi.pem
+	mysql < cosas/base_router.sql
 	systemctl restart nginx $versionphp-fpm
 	cd -
 else
