@@ -18,7 +18,7 @@ fi
 if [[ ! -v interfaz ]]
 then
 	echo
-	echo "Falta la variable profesores"
+	echo "Falta la variable interfaz"
 	echo "  - Este error no es fatal"
 	echo "  - Se continua la ejecucion"
 	echo

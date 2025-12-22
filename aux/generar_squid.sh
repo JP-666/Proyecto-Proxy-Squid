@@ -18,6 +18,11 @@ else
 	echo "# Opcion: Alumnos NO PUEDEN acceder al router de los profesores ($router1)" >> cosas/squid.custom
 fi
 
+if [[ -f cosas/acl ]]
+then
+	echo "# Opcion: Bloqueo de dominios" >> cosas/squid.custom
+fi
+
 echo "# Opcion: Red profesores: $red1" >> cosas/squid.custom
 echo "# Opcion: Red alumnos 1: $red2" >> cosas/squid.custom
 echo "# Opcion: Red alumnos 2: $red3" >> cosas/squid.custom

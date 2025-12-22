@@ -24,11 +24,7 @@ do
 	fi
 done
 
-nano cosas/acl
+echo "A continuacion se te soltara en nano, en el archivo, para que lo edites, esto es opcional, puedes simplemente salir..."
+sleep 3
 
-#if [[ $UID != 0 ]]
-#then
-#	echo "No se puede copiar, no eres superusuario, se ha guardado el archivo"
-#else
-#	cp -rvf cosas/acl /etc/squid/acl.txt
-#fi
+nano cosas/acl

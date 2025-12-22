@@ -4,16 +4,13 @@ if [[ $UID != 0 ]]
 then
 	echo "##########################################################################################"
 	echo "##########################################################################################"
+	echo "##########################                              ##################################"
+	echo "##########################   DEBES ACCEDER COMO ROOT!   ##################################"
+	echo "##########################                              ##################################"
 	echo "##########################################################################################"
-	echo "					NO ESTAS ACCEDIENDO COMO ROOT!                          "
-	echo 			"Esto puede causar problemas, algunas funciones no estaran disponibles  "
 	echo "##########################################################################################"
-	echo "##########################################################################################"
-	echo "##########################################################################################"
-	export noroot=true
-	echo "RECUERDA ARRANCAR ESTO CON source $0 PARA GUARDAR LAS CONFIGS PARA USARLAS LUEGO"
 	sleep 1
-	echo "Se guardaran las variables en \"variables.sh\""
+	exit
 fi
 
 
@@ -31,11 +28,19 @@ echo "###               Instalacion              ###"
 echo "##############################################"
 echo
 echo "A continuacion se seguiran una serie de pasos:"
-echo "	1. Configurar el script (conf.sh)"
-echo "	2. Instalar los paquetes necesarios (instalar.sh)"
-echo "	3. "
-echo "	4. "
-echo ""
+echo "	1. Personalizar la instalacion"
+echo "	2. Generar configuraciones externas (SQUID, NGINX)"
+echo "	3. Instalar los paquetes necesarios"
+echo "	4. Configurar IPTABLES"
+echo "  5. Permitir loguearse como root con contraseña a traves de SSH (OPCIONAL)"
+echo "  6. Configurar el sistema (sysctl)"
+echo "  7. Instalar la interfaz (OPCIONAL)"
+echo "  8. Configurar la red"
+echo "  9. Configurar SQUID (Y sus ACL (OPCIONALES))"
+echo "  10. Configurar el servidor DHCP"
+echo "  11. Configurar RADIUS"
+echo
+echo
 
 echo "Primero, este programa soporta configurar dinamicamente los servicios, ¿Quieres personalizar la instalacion? (Redes, filtros, interfaces de configuracion, DHCP...)"
 read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ? ' conf
@@ -86,26 +91,13 @@ read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ?
 			echo
 			source aux/generar_squid.sh
 			echo
-			if [[ $noroot == "true" ]]
-			then
-				echo
-				echo "No se pueden hacer algunas configuraciones, no eres root"
-				echo
-				echo "Ejecuta el script \"root.sh\" como superusuario para continuar con la instalacion, esto solo funcionara si has ejecutado este script con >>> source $0"
-				aux/gen_variables.sh
-			else
-				source root.sh
-			fi
+			read -p "Se ha finalizado la parte de personalizacion, presiona enter para continuar con la instalacion"
+			source root.sh
 		;;
 		*)
-			if [[ $noroot == "true" ]]
-			then
-				echo "¡No te puedo dejar que continues sin superusuario!"
-			else
-				echo "Perfecto entonces, se instalara todo con las configuracion por defecto!"
-				echo "¡Buena suerte!"
-				source pordefecto.sh
-			fi
+			echo "Perfecto entonces, se instalara todo con las configuracion por defecto!"
+			echo "¡Buena suerte!"
+			source pordefecto.sh
 		;;
 	esac
 
