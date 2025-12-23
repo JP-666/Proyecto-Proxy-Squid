@@ -40,3 +40,4 @@ read -p "Ahora se instalara postfix, en la seleccion, marca la opcion \"sitio de
 apt install postfix mailutils
 
 cp -rvf cosas/main.cf /etc/postfix/main.cf
+systemctl restart postfix

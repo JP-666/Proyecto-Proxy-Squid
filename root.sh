@@ -122,3 +122,5 @@ else
 fi
 echo "[12] Haciendo RADIUS"
 aux/radius.sh
+echo "[13] Conf. Mail"
+aux/mail.sh
