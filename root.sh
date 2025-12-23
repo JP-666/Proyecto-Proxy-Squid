@@ -115,7 +115,23 @@ then
 	cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
 	ln -sf /srv/certi.pem /srv/alumnos/certi.pem
 	cd -
+
+
+	# El usuario DEBERIA decir que si.
 	mysql < cosas/base_router.sql # Esto se estaba ejecutando en /bin, fallo tonto!
+	read -p "Quieres cambiar la contraseña del router? ((S)/N) > " crout
+	case crout in
+		N | n )
+			echo "Ok, pero deberias, es importante"
+		;;
+		* )
+			echo -n "Introduce la nueva contraseña. NO SALDRA EN LA TERMINAL > "
+			read -s ncont
+			conthash=$(php -r "echo password_hash('$ncont', PASSWORD_BCRYPT);")
+			mysql -D router -e "UPDATE datoslogin SET contrahash = \"$conthash\" WHERE usuario = \"admin\";"
+		;;
+	esac
+
 	systemctl restart nginx $versionphp-fpm
 else
 	echo "Se ha saltado la instalacion de NGINX, tal como has pedido"

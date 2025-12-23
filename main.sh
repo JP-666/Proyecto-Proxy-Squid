@@ -22,6 +22,8 @@ then
 	exit
 fi
 
+setfont Uni3-TerminusBold24x12
+
 echo "##############################################"
 echo "###               Mega-Script              ###"
 echo "###               Instalacion              ###"
