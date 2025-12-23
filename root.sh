@@ -114,9 +114,9 @@ then
 	versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP!")
 	cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
 	ln -sf /srv/certi.pem /srv/alumnos/certi.pem
-	mysql < cosas/base_router.sql
-	systemctl restart nginx $versionphp-fpm
 	cd -
+	mysql < cosas/base_router.sql # Esto se estaba ejecutando en /bin, fallo tonto!
+	systemctl restart nginx $versionphp-fpm
 else
 	echo "Se ha saltado la instalacion de NGINX, tal como has pedido"
 fi

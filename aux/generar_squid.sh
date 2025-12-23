@@ -83,7 +83,16 @@ echo "http_access allow clase2" >> cosas/squid.custom
 echo "http_access deny all" >> cosas/squid.custom
 echo "dns_nameservers 8.8.8.8 8.8.4.4" >> cosas/squid.custom
 
+read -p "Tamaño del cache (En GB) (256) > ? " tmn
 
+if [[ -z $tmn ]]
+then
+	echo "cache_dir ufs /var/spool/squid $(((256*1024))) 8 16" >> cosas/squid.custom
+else
+	echo "cache_dir ufs /var/spool/squid $((($tmn*1024))) 8 16" >> cosas/squid.custom
+fi
+
+# Operador aritmaricatico de Bash $((())) = Resultado de la operacion
 
 echo ""
 echo "Generado un nuevo archivo de conf. de squid"

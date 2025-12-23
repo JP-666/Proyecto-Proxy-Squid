@@ -18,6 +18,7 @@ case $opc in
 		echo "	network 10.0.0.0" >> cosas/interfaces.custom
 		export router1=10.0.0.1
 		export red1=10.0.0.0
+		aux/generar_dhcp.sh $router1 $red1 255.255.255.0
 	;;
 	*)
 		source aux/generar_red.sh 1 10.0.0.1 enp0s8 10.0.0.0 255.255.255.0
@@ -36,9 +37,10 @@ case $opc2 in
 		echo "	netmask 255.255.255.0" >> cosas/interfaces.custom
 		echo "	network 172.16.1.0" >> cosas/interfaces.custom
 		export red2=172.16.1.0
+		aux/generar_dhcp.sh 172.16.1.1 $red2 255.255.255.0
 	;;
 	*)
-		source aux/generar_red.sh 2 172.16.1.1 enp0s9 172.16.1.0 255.255.255.0
+		source aux/generar_red.sh 2 172.16.1.1 enp0s9 172.16.1.0 255.255.255.0 --append
 		aux/generar_dhcp.sh $ip $dir $nms --append
 	;;
 esac
@@ -54,9 +56,10 @@ case $opc3 in
 		echo "	netmask 255.255.255.0" >> cosas/interfaces.custom
 		echo "	network 172.16.2.0" >> cosas/interfaces.custom
 		export red3=172.16.1.0
+		aux/generar_dhcp.sh 172.16.1.1 $red2 255.255.255.0
 	;;
 	*)
-		source aux/generar_red.sh 3 172.16.2.1 enp0s10 172.16.2.0 255.255.255.0
+		source aux/generar_red.sh 3 172.16.2.1 enp0s10 172.16.2.0 255.255.255.0 --append # Faltaban estos 3
 		aux/generar_dhcp.sh $ip $dir $nms --append
 	;;
 esac
