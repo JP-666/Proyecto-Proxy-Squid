@@ -49,7 +49,7 @@ read -p '(S)i, claro, hazme preguntas, ->(N)o, hazlo a tu manera :D -> [S/(N)] ?
 			echo
 			echo "Genial, ahora se ejecutara el script de personalizacion, ten cuidado con tus respuestas, podras salir a un shell antes de continuar cuando acabes de personalizar"
 			echo
-			echo "Se configuraran las interfaces de red y el servidor dhcp" 
+			echo "Se configuraran las interfaces de red y el servidor dhcp"
 			echo
 			source aux/personalizaciones.sh
 			echo
