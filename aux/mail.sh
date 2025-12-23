@@ -7,7 +7,7 @@ then
 fi
 
 
-if [[ -z $router1 ]]
+if [[ ! -z $router1 ]]
 then
 	echo "Usando red ya configurada... - $router1"
 	ip=$router1
