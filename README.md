@@ -1,16 +1,32 @@
-# ¿Que?
-- Esto es una compilacion de scripts que instala un proxy squid super simple transparente (+SSL)
+# **Proyecto de Automatización Proxy Squid**
 
-# ¿Como?
+## **Descripción General**
 
-* Descarga https://github.com/JP-666/Proyecto-Proxy-Squid 
-	* ```git clone https://github.com/JP-666/Proyecto-Proxy-Squid```
-		* (Instala Git)
-			* ```apt install git```
-* Ejecuta 'main.sh'
-	* Ah, como superusuario!
-		* (Si no, no te preocupes, que te guarda las respuestas!)
-# ¿Uh? (Notas)
-- Asume que estas usando enp0s3 para la red 'real' y enp0s8 para la red 'interna'
-- Asume que tu red (Principal, profesorado) es 10.0.0.0/24, si no es asi, cambia los archivos de configuracion o ejecuta el asistente dentro de "extras"
-- El resto de redes (Alumnos 1 y Alumnos 2) tambien se pueden cambiar
+Este repositorio contiene un conjunto de herramientas y scripts diseñados para el despliegue automatizado de un servidor Proxy Squid con capacidades de interceptación SSL (SSL Bumping) y gestión mediante una interfaz web integrada. El sistema está optimizado para entornos de red basados en sistemas operativos Debian.
+Tambien se incluye instalacion de un servidor RADIUS con DHCP, DNS y extras.
+
+## **Características Técnicas**
+
+* **Intercepción SSL/TLS**: Implementación de SSL Bump para navegacion por sitios HTTPS.
+* **Gestión Web Centralizada**: Interfaz administrativa desarrollada en PHP con sistema de autenticación basado en sesiones. (Opcional)
+* **Persistencia de Datos**: Almacenamiento de credenciales y registros (RADIUS/Interfaz de config.) en MariaDB/MySQL.
+* **Modularidad de PHP**: Detección dinámica de la versión de PHP instalada para la configuración automática de servicios PHP-FPM y sockets de NGINX.
+* **Proxy Transparente**: Configuración automatizada de reglas de IPTABLES para la redirección de tráfico sin requerir configuración manual en los dispositivos cliente.
+* **RADIUS**: Configuración e instalacion de RADIUS para autenticacion GTC wireless 802.11X.
+* **Y mucho mas**: Explora el repositorio y encuentra mucho mas como los scripts de utilidad.
+
+## **Procedimiento de Instalación**
+
+Se requiere un sistema base Debian 12 con al menos dos interfaces de red configuradas (WAN y LAN).
+
+1. Clonar el repositorio:
+   git clone https://github.com/JP-666/Proyecto-Proxy-Squid.git
+2. Acceder al directorio:
+   cd Proyecto-Proxy-Squid
+3. Ejecutar el instalador (Como superusuario):
+   ./main.sh
+
+## **Documentación y Wiki**
+
+Para obtener detalles adicionales sobre la arquitectura de red, manuales de usuario específicos y guías de resolución de problemas técnicos, consulte la wiki oficial: https://cristobal.wiki/  
+Mantenido por JP-666 y LDMG
