@@ -1,0 +1,5 @@
+myhostname = 1.0.0.1
+mydestination = $myhostname, localhost
+mynetworks = 127.0.0.0/8, 1.0.0.0/24
+inet_interfaces = all
+inet_protocols = ipv4

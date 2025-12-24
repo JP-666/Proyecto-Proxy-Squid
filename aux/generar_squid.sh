@@ -92,6 +92,8 @@ else
 	echo "cache_dir ufs /var/spool/squid $((($tmn*1024))) 8 16" >> cosas/squid.custom
 fi
 
+echo "shutdown_lifetime 1 seconds" >> cosas/squid.custom
+
 # Operador aritmaricatico de Bash $((())) = Resultado de la operacion
 
 echo ""
