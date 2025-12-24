@@ -1,0 +1,17 @@
+[Unit]
+Description=J-Mail Service - El protocolo de correo mas simple del mundo
+After=network.target
+
+[Service]
+# Se ejecuta como root para poder leer /etc/passwd y crear carpetas en /jmail
+User=root
+Environment=PYTHONUNBUFFERED=1
+# Si no tenemos ^ESTO^, no se ve en journalctl. (Es por que no se hace el "BUFFER" de STDOUT.
+ExecStart=/usr/bin/python3 /usr/bin/jmail
+Restart=always
+RestartSec=5
+
+# Si te falla mucho, cambiale esto, al menos a mi en Debian 12 y 13 funcionaba bien reiniciando cada 5 segundos
+
+[Install]
+WantedBy=multi-user.target
