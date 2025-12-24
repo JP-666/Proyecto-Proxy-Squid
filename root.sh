@@ -25,15 +25,6 @@ then
 fi
 
 
-if [[ ! -v aluconf ]]
-then
-	echo "Falta la variable aluconf"
-	echo "  - Este error no es fatal"
-	echo "  - Se continua la ejecucion"
-	echo
-fi
-
-
 
 # Si tenemos alguna variable que SEA necesaria si o si, la metemos aqui, si falla, ponemos "fallo" a "true", parece ser que bash no nos permite simplemente usar if (lo que sea) true
 
@@ -104,35 +95,7 @@ systemctl restart isc-dhcp-server
 # A lo mejor lo de NGINX se podria mover fuera, a su propio script.
 if [[ ! $interfaz == "no" ]]
 then
-	echo "[11] Conf. Nginx"
-	# Faltaba esto!! El SQL en PHP
-	apt install php-mysql
-	rm -rvf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
-	cp -rvf $archsitio /etc/nginx/sites-enabled/default
-	cp -rvf $archsitio /etc/nginx/sites-available/default
-	cd /bin
-	versionphp=$(ls php7* || ls php8* || ls php9* || ls php6* || ls php5* || ls php4* || ls php3* || ls php2* || echo "No se ha encontrado PHP!")
-	cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
-	ln -sf /srv/certi.pem /srv/alumnos/certi.pem
-	cd -
-
-
-	# El usuario DEBERIA decir que si.
-	mysql < cosas/base_router.sql # Esto se estaba ejecutando en /bin, fallo tonto!
-	read -p "Quieres cambiar la contraseña del router? ((S)/N) > " crout
-	case crout in
-		N | n )
-			echo "Ok, pero deberias, es importante"
-		;;
-		* )
-			echo -n "Introduce la nueva contraseña. NO SALDRA EN LA TERMINAL > "
-			read -s ncont
-			conthash=$(php -r "echo password_hash('$ncont', PASSWORD_BCRYPT);")
-			mysql -D router -e "UPDATE datoslogin SET contrahash = \"$conthash\" WHERE usuario = \"admin\";"
-		;;
-	esac
-
-	systemctl restart nginx $versionphp-fpm
+	source aux/nginx.sh
 else
 	echo "Se ha saltado la instalacion de NGINX, tal como has pedido"
 fi
