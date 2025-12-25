@@ -1,0 +1,11 @@
+if [[ -d "/jmail/$USER" ]]; then
+    NUM_MAILS=$(find "/jmail/$USER" -maxdepth 1 -name "*.json" | wc -l)
+    if [[ $NUM_MAILS -gt 0 ]]; then
+        echo ""
+        echo "*********************************************************"
+        echo "  ¡TIENES $NUM_MAILS CORREOS NUEVOS DE JMAIL!"
+        echo "  Escribe 'leercorreo' para leerlos. "
+        echo "*********************************************************"
+        echo ""
+    fi
+fi

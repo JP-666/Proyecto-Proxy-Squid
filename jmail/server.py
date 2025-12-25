@@ -5,6 +5,7 @@ import json
 import pwd
 from datetime import datetime
 import shutil
+import random # Esto lo tengo aqui para que seleccione de la lista de mensajes de "despedida"
 
 
 IP_ESCUCHA = "0.0.0.0" # Todas las interfaces = 0.0.0.0, bloquear a una interfaz = (IP)
@@ -71,7 +72,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 					with open(filename, "wb") as f:
 						f.write(raw_data)
 					print(f"[?] Datos malformados guardados en: {filename}") # Si no, lo metemos en la carpeta de "perdido"
-				conn.sendall("\nSAYONARA (Se ha cerrado la conexion)\n".encode('utf-8'))
+				mensajeadios = random.choice(["SAYONARA", "CONSIDERA ESTO UN DIVORCIO", "VOLVERE!"])
+				# Esto en Godot lo hubiera escrito tal que ("var mensajeadios = ["..."].pick_random()")
+				# Pero claro solo se me ocurre a mi aprender programacion de videojuegos ANTES de
+				# Aprender programacion de... Bueno, de verdad.
+				conn.sendall(f"\n{mensajeadios} (Se ha cerrado la conexion)\n".encode('utf-8'))
 	except KeyboardInterrupt:
 		print("\nPreprando para salir...") # Aqui falta la logíca para cerrar el puerto, pero bueno, ya me pondre con eso despues de navidad. Que Cristóbal dijo que teniamos todo el curso.
 
