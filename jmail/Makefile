@@ -4,12 +4,13 @@ INSTALL_DIR=/usr/bin
 SERVICE_NAME=jmail.service
 SYSTEMD_DIR=/etc/systemd/system
 
-.PHONY: instalar borrar
+.PHONY: instalar borrar purgar
 
 instalar:
 	@echo "Instalando J-Mail..."
 	# Crear directorio de correos (Aunque esto lo hace el 'servidor' en si, pero por si acaso :D
 	mkdir -p /jmail/perdido
+	chmod 777 -Rvf /jmail/
 	cp $(SCRIPT_NAME) $(INSTALL_DIR)/$(BINARY_NAME)
 	chmod +x $(INSTALL_DIR)/$(BINARY_NAME)
 	cp $(SERVICE_NAME) $(SYSTEMD_DIR)/
@@ -26,3 +27,7 @@ borrar:
 	rm -f $(INSTALL_DIR)/$(BINARY_NAME)
 	systemctl daemon-reload
 	@echo "J-Mail eliminado del sistema."
+
+purgar:
+	@echo "Borrando los archivos"
+	rm -rvf /jmail/*

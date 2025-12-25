@@ -4,10 +4,14 @@ import os
 import json
 import pwd
 from datetime import datetime
+import shutil
+
 
 IP_ESCUCHA = "0.0.0.0" # Todas las interfaces = 0.0.0.0, bloquear a una interfaz = (IP)
 PUERTO = 42069 # Puedes cambiar esto, pero avisa a los clientes
 BASE_DIR = "/jmail/" # JMAIL por que... Bueno, Gmail, pero J de Jua... Bueno, creo que lo pillas... ¿No?
+CIERRE = b"HASTALAVISTABABY" # Esto es lo que cierra el "correo"
+
 
 # Crear carpeta base, la puedes cambiar arriba, aunque no se por que querrias (¿?¿?)
 os.makedirs(BASE_DIR, exist_ok=True)
@@ -30,12 +34,17 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 			conn, addr = server.accept()
 			client_ip = addr[0]
 			with conn:
+				conn.sendall("HABLALE A LA MANO\n\n".encode('utf-8'))
 				raw_data = b""
 				while True:
 					data = conn.recv(4096)
 					if not data:
 						break
 					raw_data += data
+					if raw_data.strip().endswith(CIERRE):
+						# Limpiamos el cierre del JSON (usamos len para ser exactos)
+						raw_data = raw_data.strip()[:-len(CIERRE)]
+						break
 				try:
 					# Parsear el JSON recibido y buscar el "PARA"
 					decoded_data = json.loads(raw_data.decode('utf-8'))
@@ -46,6 +55,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 					else:
 						ruta_final = os.path.join(BASE_DIR, "perdido")
 					os.makedirs(ruta_final, exist_ok=True)
+					os.chmod(ruta_final, 0o770) # U+G LEX
+					shutil.chown(ruta_final, user=destinatario, group=destinatario)
 					# Nombre de archivo: (IP)_(TIEMPO).json
 					timestamp = datetime.now().strftime("%H%M%S")
 					filename = os.path.join(ruta_final, f"{client_ip}_{timestamp}.json")
@@ -60,6 +71,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 					with open(filename, "wb") as f:
 						f.write(raw_data)
 					print(f"[?] Datos malformados guardados en: {filename}") # Si no, lo metemos en la carpeta de "perdido"
+				conn.sendall("\nSAYONARA (Se ha cerrado la conexion)\n".encode('utf-8'))
 	except KeyboardInterrupt:
 		print("\nPreprando para salir...") # Aqui falta la logíca para cerrar el puerto, pero bueno, ya me pondre con eso despues de navidad. Que Cristóbal dijo que teniamos todo el curso.
 
