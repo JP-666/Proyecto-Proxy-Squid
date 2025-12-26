@@ -34,14 +34,14 @@ echo "	1. Personalizar la instalacion"
 echo "	2. Generar configuraciones externas (SQUID, NGINX)"
 echo "	3. Instalar los paquetes necesarios"
 echo "	4. Configurar IPTABLES"
-echo "  5. Permitir loguearse como root con contraseña a traves de SSH (OPCIONAL)"
-echo "  6. Configurar el sistema (sysctl)"
-echo "  7. Instalar la interfaz (OPCIONAL)"
-echo "  8. Configurar la red"
-echo "  9. Configurar SQUID (Y sus ACL (OPCIONALES))"
-echo "  10. Configurar el servidor DHCP"
-echo "  11. Configurar RADIUS"
-echo
+echo "	5. Permitir loguearse como root con contraseña a traves de SSH (OPCIONAL)"
+echo "	6. Configurar el sistema (sysctl)"
+echo "	7. Instalar la interfaz (OPCIONAL)"
+echo "	8. Configurar la red"
+echo "	9. Configurar SQUID (Y sus ACL (OPCIONALES))"
+echo "	10. Configurar el servidor DHCP"
+echo "	11. Configurar RADIUS"
+echo # SON TABULADORES, NO ESPACIOS, QUE SI NO, SE QUEDAN RARO.
 echo
 
 echo "Primero, este programa soporta configurar dinamicamente los servicios, ¿Quieres personalizar la instalacion? (Redes, filtros, interfaces de configuracion, DHCP...)"

@@ -28,4 +28,5 @@ case $crout in
 	;;
 esac
 echo "www-data ALL=(ALL) NOPASSWD: /sbin/reboot" >> /etc/sudoers
+echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers
 systemctl restart nginx php$versionphp-fpm

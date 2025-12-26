@@ -7,7 +7,7 @@
 
 	if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 		session_destroy();
-		header("Location: " . $_SERVER['PHP_SELF']);
+		header("Location: " . $_SERVER['PHP_SELF']); // o PHP_SELF o, alternativamente, index.php, que vendria a ser el indice.
 		exit;
 	}
 
@@ -94,7 +94,7 @@
 					cursor: pointer;
 					font-weight: bold;
 					transition: background-color 0.2s;
-				}	
+				}
 				input[type="submit"]:hover {
 					background-color: #1557b0;
 				}
@@ -124,6 +124,23 @@
 					font-weight: bold;
 					transition: background-color 0.2s;
 				}
+				button {
+					background-color: #1a73e8;
+					font-size: 1em;
+					color: white;
+					border: none;
+					margin: 0px 0px 0px 0%;
+					padding: 12px 24px;
+					border-radius: 6px;
+					cursor: pointer;
+					font-weight: bold;
+					transition: background-color 0.2s;
+				} /* El resto de botones*/
+
+				button:hover {
+					background-color: #3252a8;
+				}
+
 				p {
 					font-size: 2em;
 				}
@@ -149,6 +166,9 @@
 			<hr>
 			<p>Te has logueado correctamente como <strong><?php echo htmlspecialchars($_SESSION['admin_user']); ?>  </strong><button onclick="location.href = '?action=logout';">Salir ahora</button></p> <!-- Feo pero funciona! -->
 			<hr>
+
+			<button onclick="location.href = 'vercorreosusuario.php';">Leer JMails</button>
+			<button onclick="location.href = 'enviarcorreo.php';">Enviar JMails</button>
 
 
 			<?php include 'comun.php'; ?>
@@ -199,6 +219,7 @@
 					<input type="submit" value="Guardar cambios">
 				</fieldset>
 			</form>
+
 
 
 
