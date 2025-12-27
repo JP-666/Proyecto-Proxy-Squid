@@ -167,11 +167,10 @@
 			<p>Te has logueado correctamente como <strong><?php echo htmlspecialchars($_SESSION['admin_user']); ?>  </strong><button onclick="location.href = '?action=logout';">Salir ahora</button></p> <!-- Feo pero funciona! -->
 			<hr>
 
-			<button onclick="location.href = 'vercorreosusuario.php';">Leer JMails</button>
-			<button onclick="location.href = 'enviarcorreo.php';">Enviar JMails</button>
 
 
 			<?php include 'comun.php'; ?>
+			<?php include 'jmail.php'; ?>
 <!-- Lo antiguo (Memoria, IP, uptime, etc.) -->
 
 			<table>
