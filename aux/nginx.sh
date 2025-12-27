@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "[11] Conf. Nginx"
-apt install php-mysql
+apt install php-mysql mysql-common mariadb-client
 rm -rvf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
 cp -rvf $archsitio /etc/nginx/sites-enabled/default
 cp -rvf $archsitio /etc/nginx/sites-available/default
@@ -14,7 +14,7 @@ else
 fi
 cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
 ln -sf /srv/certi.pem /srv/alumnos/certi.pem
-mysql < cosas/base_router.sql
+mysql < cosas/base_router.sql # Nos habia faltado el cliente de mariadb (O mysql)
 read -p "Quieres cambiar la contraseña del router? ((S)/N) > " crout
 case $crout in
 	N | n )
@@ -28,5 +28,4 @@ case $crout in
 	;;
 esac
 echo "www-data ALL=(ALL) NOPASSWD: /sbin/reboot" >> /etc/sudoers
-echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers
 systemctl restart nginx php$versionphp-fpm

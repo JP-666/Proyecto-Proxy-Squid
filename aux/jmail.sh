@@ -38,6 +38,7 @@ then
 	echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers.d/jmail
 	chmod 440 /etc/sudoers.d/jmail -Rvf
 	echo "Copiando PHPs y activando el include"
+	cp -rvf leerweb.sh /usr/bin/
 	cp -rvf enviarcorreo.php /srv/
 	cp -rvf descargar.php /srv/
 	cp -rvf leercorreo.php /srv/
@@ -55,5 +56,5 @@ then
 	cat bashrc >> $HOME/.bashrc
 	echo "Solo se instalara en tu usuario, añadelo a los usuarios que quieras usando cat bashrc >> $$HOME/.bashrc"
 echo
-	"Ok, lo tienes en el archivo \"bashrc\" por si lo quieres hacer luego"
+	echo "Ok, lo tienes en el archivo \"bashrc\" por si lo quieres hacer luego"
 fi
