@@ -70,6 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["usuario"])) {
 						<a href="descargar.php?user=<?= urlencode($u) ?>&file=<?= urlencode($file) ?>" target="_blank">
 							[CLICK AQUI PARA DESCARGAR]
 						</a>
+						<br>
+						<a href="borrar.php?user=<?= urlencode($u) ?>&file=<?= urlencode($file) ?>" target="_blank">
 					</td>
 				</tr>
 			<?php endforeach; ?>
