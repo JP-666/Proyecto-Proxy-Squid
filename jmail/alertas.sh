@@ -5,7 +5,7 @@
 tail -f /var/log/squid/access.log  | grep --line-buffered "TCP_DENIED" | while read -r linea
 do
 	IP=$(echo "$linea" | awk '{print $3}')
-	enlace=(echo "$linea" | awk '{print $7}')
+	enlace=$(echo "$linea" | awk '{print $7}')
 	tiempoahora=$(date "+%d/%m a las %H:%M:%S")
 
 	msgaenviar="{
