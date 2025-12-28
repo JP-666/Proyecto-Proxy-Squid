@@ -59,7 +59,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 					os.chmod(ruta_final, 0o770) # U+G LEX
 					shutil.chown(ruta_final, user=destinatario, group=destinatario)
 					# Nombre de archivo: (IP)_(TIEMPO).json
-					timestamp = datetime.now().strftime("%H%M%S")
+					# Actualizacion: Este "timestamp" es mas leible que (horaminutosegundo)
+					# Ahora es (hora:minuto:segundo_dia_mes_añolargo)
+					timestamp = datetime.now().strftime("%H:%M:%S_%d-%m-%Y")
 					filename = os.path.join(ruta_final, f"{client_ip}_{timestamp}.json")
 					with open(filename, "w") as f:
 						json.dump(decoded_data, f, indent=4)
@@ -76,7 +78,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 				# Esto en Godot lo hubiera escrito tal que ("var mensajeadios = ["..."].pick_random()")
 				# Pero claro solo se me ocurre a mi aprender programacion de videojuegos ANTES de
 				# Aprender programacion de... Bueno, de verdad.
-				conn.sendall(f"\n{mensajeadios} (Se ha cerrado la conexion)\n".encode('utf-8'))
+				try:
+					conn.sendall(f"\n{mensajeadios} (Se ha cerrado la conexion)\n".encode('utf-8'))
+				except: # Si cierra la puerta (conexion) en la cara. O si el puerto esta bloqueado.
+					print("[!] El cliente ha cerrado la conexion sin avisar (Menudo capullo) (O igual esta el puerto bloqueado, que es posible)"]
 	except KeyboardInterrupt:
 		print("\nPreprando para salir...") # Aqui falta la logíca para cerrar el puerto, pero bueno, ya me pondre con eso despues de navidad. Que Cristóbal dijo que teniamos todo el curso.
 
