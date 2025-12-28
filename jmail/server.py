@@ -81,7 +81,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 				try:
 					conn.sendall(f"\n{mensajeadios} (Se ha cerrado la conexion)\n".encode('utf-8'))
 				except: # Si cierra la puerta (conexion) en la cara. O si el puerto esta bloqueado.
-					print("[!] El cliente ha cerrado la conexion sin avisar (Menudo capullo) (O igual esta el puerto bloqueado, que es posible)"]
+					print("[!] El cliente ha cerrado la conexion sin avisar (Menudo capullo) (O igual esta el puerto bloqueado, que es posible)")
 	except KeyboardInterrupt:
 		print("\nPreprando para salir...") # Aqui falta la logíca para cerrar el puerto, pero bueno, ya me pondre con eso despues de navidad. Que Cristóbal dijo que teniamos todo el curso.
 
