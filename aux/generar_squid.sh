@@ -11,12 +11,15 @@ else
 	echo "# Opcion: Profesores salen por proxy" >> cosas/squid.custom
 fi
 
-if [[ ! $aluconf == "no" ]]
-then
-	echo "# Opcion: Alumnos pueden acceder al router de los profesores ($router1)" >> cosas/squid.custom
-else
-	echo "# Opcion: Alumnos NO PUEDEN acceder al router de los profesores ($router1)" >> cosas/squid.custom
-fi
+#if [[ ! $aluconf == "no" ]]
+#then
+#	echo "# Opcion: Alumnos pueden acceder al router de los profesores ($router1)" >> cosas/squid.custom
+#else
+#	echo "# Opcion: Alumnos NO PUEDEN acceder al router de los profesores ($router1)" >> cosas/squid.custom
+#fi
+
+# Todo esto ya no se hace, pues ahora todos pueden entrar en la interfaz, pero necesitan contraseña.
+
 
 if [[ -f cosas/acl ]]
 then
@@ -46,10 +49,10 @@ then
 fi
 echo "acl clase1 src $red2/24" >> cosas/squid.custom
 echo "acl clase2 src $red3/24" >> cosas/squid.custom
-if [[ $aluconf == "no" ]]
-then
-	echo "acl iprouterprofesores dst $router1" >> cosas/squid.custom
-fi
+#if [[ $aluconf == "no" ]]
+#then
+#	echo "acl iprouterprofesores dst $router1" >> cosas/squid.custom
+#fi
 echo "acl SSL_ports port 443 563" >> cosas/squid.custom
 echo "acl Safe_ports port 80" >> cosas/squid.custom
 echo "acl Safe_ports port 443" >> cosas/squid.custom
@@ -62,11 +65,11 @@ echo "acl step1 at_step SslBump1" >> cosas/squid.custom
 echo "ssl_bump peek step1" >> cosas/squid.custom
 echo "ssl_bump bump all" >> cosas/squid.custom
 
-if [[ $aluconf == "no" ]]
-then
-	echo "http_access deny iprouterprofesores clase1" >> cosas/squid.custom
-	echo "http_access deny iprouterprofesores clase2" >> cosas/squid.custom
-fi
+#if [[ $aluconf == "no" ]]
+#then
+#	echo "http_access deny iprouterprofesores clase1" >> cosas/squid.custom
+#	echo "http_access deny iprouterprofesores clase2" >> cosas/squid.custom
+#fi
 
 if [[ ! $profesores == "no" ]]
 then

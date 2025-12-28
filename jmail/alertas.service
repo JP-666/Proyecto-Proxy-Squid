@@ -1,0 +1,12 @@
+[Unit]
+Description=Alertas JMAIL para SQUID
+After=network.target
+
+[Service]
+User=proxy
+ExecStart=/usr/bin/alertas
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

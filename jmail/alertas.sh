@@ -2,7 +2,7 @@
 # Si detecta que un alumno esta intentando entrar en un sitio "prohibido" nos avisa por jmail.
 
 
-tail -f /var/log/squid/access.log  | grep --line-buffered "TCP_DENIED" | while read -r linea
+tail -n 0 -f /var/log/squid/access.log  | grep --line-buffered "TCP_DENIED" | while read -r linea
 do
 	IP=$(echo "$linea" | awk '{print $3}')
 	enlace=$(echo "$linea" | awk '{print $7}')
@@ -11,7 +11,7 @@ do
 	msgaenviar="{
 	\"MAIL\": {
 			\"PARA\": \"root\",
-			\"DE\": \"admin\",
+			\"DE\": \"Squid\",
 			\"ASUNTO\": \"Advertencia sitio prohibido Squid para la IP $IP\",
 			\"CUERPO\": \"La IP $IP ha intentado acceder el dia $tiempoahora a la direccion $enlace.\"
 		}

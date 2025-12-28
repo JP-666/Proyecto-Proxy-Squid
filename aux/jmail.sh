@@ -55,6 +55,21 @@ if [[ ! $bashjmail =~ ^[Nn]$ ]]
 then
 	cat bashrc >> $HOME/.bashrc
 	echo "Solo se instalara en tu usuario, añadelo a los usuarios que quieras usando cat bashrc >> $$HOME/.bashrc"
-echo
+else
 	echo "Ok, lo tienes en el archivo \"bashrc\" por si lo quieres hacer luego"
 fi
+
+read -p 'Activar envios de JMAIL para Squid Proxy? ([S]/N) ? > ' squid
+
+if [[ ! $squid =~ ^[Nn]$ ]]
+then
+	echo "Copiando archivos..."
+	cp alertas.sh /usr/bin/alertas
+	chmod +x /usr/bin/alertas
+	cp alertas.service /etc/systemd/system/
+	systemctl reload-daemon
+	systemctl start alertas
+else
+	echo "Ok, lo puedes hacer instalando el servicio de SystemD"
+fi
+
