@@ -68,7 +68,7 @@ then
 	chmod +x /usr/bin/alertas
 	cp alertas.service /etc/systemd/system/
 	systemctl reload-daemon
-	systemctl start alertas
+	systemctl enable --now alertas
 else
 	echo "Ok, lo puedes hacer instalando el servicio de SystemD"
 fi
