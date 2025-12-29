@@ -39,9 +39,28 @@ then
 	MENUDOCUERPAZO="Feliz navidad, hijo de perra"
 fi
 
+while true
+do
 
+	read -p 'Quieres enviar algun campo mas ([Nombre del campo]/([Deja vacio])) ' campo
+	if [[ ! -z $campo ]]
+	then
+		OPC="$OPC,
+		\"$campo\" : "
+		read -p "Valor para $campo (?) " valor
+		OPC="$OPC\"$valor\""
+	else
+		break
+	fi
+done
 
-
+read -p '¿Quieres adjuntar un archivo? (Ruta / [Enter para saltar]) ' f_adjunto
+if [[ -f "$f_adjunto" ]]
+then
+	NOM_ADJUNTO=$(basename "$f_adjunto")
+	CONT_ADJUNTO=$(base64 -w 0 "$f_adjunto")
+	OPC="$OPC, \"ADJUNTO_NOMBRE\": \"$NOM_ADJUNTO\", \"ADJUNTO_DATA\": \"$CONT_ADJUNTO\""
+fi
 
 
 msgaenviar="{
@@ -50,6 +69,7 @@ msgaenviar="{
 		\"DE\": \"$QUIEN\",
 		\"ASUNTO\": \"$ASUNTOSPENDIENTES\",
 		\"CUERPO\": \"$MENUDOCUERPAZO\"
+$OPC
 	}
 }
 HASTALAVISTABABY"

@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["usuario"])) {
 					<th>De</th>
 					<th>Asunto</th>
 					<th>Acciones</th>
+					<th>Adjunto</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -72,6 +73,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["usuario"])) {
 						</a>
 						<br>
 						<a href="borrar.php?user=<?= urlencode($u) ?>&file=<?= urlencode($file) ?>" target="_blank">
+							[ARCHIVAR JMAIL]
+						</a>
+					</td>
+					<td>
+						<?php
+						if (isset($info['ADJUNTO_NOMBRE'])) {
+							$url = "adjunto.php?user=" . urlencode($u) . "&file=" . urlencode($file) . "&name=" . urlencode($info['ADJUNTO_NOMBRE']);
+							echo "<a href=\"$url\">[Descargar adjunto]</a>";
+						} else {
+							echo "[No hay adjunto]";
+						}
+					?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

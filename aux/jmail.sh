@@ -37,6 +37,8 @@ then
 	mkdir -p /etc/sudoers.d/
 	echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers.d/jmail
 	chmod 440 /etc/sudoers.d/jmail -Rvf
+	echo "Instalando JQ para leer adjuntos"
+	apt install jq -y
 	echo "Copiando PHPs y activando el include"
 	cp -rvf leerweb.sh /usr/bin/
 	cp -rvf enviarcorreo.php /srv/

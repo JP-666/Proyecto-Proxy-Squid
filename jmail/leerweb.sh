@@ -25,6 +25,9 @@ elif [[ "$ACCION" == "BORRAR" ]]; then
     fi
     mv /jmail/$USUARIO/$ARCHIVO /jmail/$USUARIO/leidos/
     echo "<h1>Ok, puedes cerrar esta pestaña</h1>"
+elif [[ "$ACCION" == "ADJUNTO" ]]; then
+	ARCHIVO=$(basename "$3")
+	jq -r '.MAIL.ADJUNTO_DATA' "/jmail/$USUARIO/$ARCHIVO" | base64 -d
 else
     echo "ERROR: Accion no permitida"
     exit 1
