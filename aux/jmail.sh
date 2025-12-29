@@ -46,6 +46,7 @@ then
 	cp -rvf leercorreo.php /srv/
 	cp -rvf vercorreosusuario.php /srv/
 	cp -rvf jmail.php /srv/
+	cp -rvf adjunto.php /srv/
 	# El include jmail.php ya esta puesto en el index.php, solo lo carga si lo tenemos
 else
 	echo "Ok, no se instalara en la interfaz."
