@@ -38,8 +38,9 @@ do
 done
 exit
 
+echo "Permitiendo copias de seguridad ahora..."
 
+echo "[mysqld]" > /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
+echo "bind-address            = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
 
-
-
-systemctl restart freeradius
+systemctl restart freeradius mariadb
