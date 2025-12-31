@@ -1,11 +1,10 @@
 import socket
 import ssl
+import os
+import json
+
 # Me falta algo, creo, no me acuerdo.
 # Vale me he acordado, base64 para los 'adjuntos' :D
-
-servidor = "localhost" # O, igual, pedir los datos.
-
-mail = open("TEST.json").read().encode("UTF-8") # O pedir correo, por el stdin, no se.
 
 context = ssl.create_default_context()
 context.check_hostname = False
@@ -14,9 +13,35 @@ context.verify_mode = ssl.CERT_NONE
 # Esperemos que no haya ningun JP y se de cuenta que puede hackearlo haciendose pasar por la IP del servidor!
 # Jaja, es broma, espero poder arreglar esto.
 
-with socket.create_connection((servidor, 42068)) as sock: # Nos conectamos
+
+
+# Leyendo datos
+
+De = input(f"¿Quien envia el mail? ({os.environ['USER']}): ") or os.environ['USER'] # ESTO ES UN MILLON DE VECES MEJOR QUE BASH OH DIOS MIO
+Para = input(f"¿Para quien (Usuario)? (root): ") or "root"
+IP = input("IP (127.0.0.1) > ") or "127.0.0.1"
+Asunto = input("¿Asunto? (Mensaje importante cifrado) ") or "Mensaje Importante Cifrado"
+Cuerpo = input("¿Cuerpo? (Hola!) " ) or "Hola!"
+
+print("Preparando mail...")
+MAIL = {
+	"MAIL" : {
+		"DE": De,
+		"PARA": Para,
+		"ASUNTO": Asunto,
+		"CUERPO": Cuerpo
+	}
+}
+print("Mail listo")
+
+mailjson=json.dumps(MAIL)
+mailjson+="\nHASTALAVISTABABY" # Cerramos el 'email'
+mailjson=mailjson.encode("UTF-8")
+
+
+with socket.create_connection((IP, 42068)) as sock: # Nos conectamos
 	with context.wrap_socket(sock, server_hostname=servidor) as sseguro: # Elevamos a SSL
-		sseguro.sendall(mail)
+		sseguro.sendall(mailjson)
 		print(sseguro.recv(1024).decode())
 
 

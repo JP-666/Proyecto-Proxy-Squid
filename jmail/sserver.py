@@ -38,9 +38,6 @@ while True:
 					raw_data = raw_data.strip()[:-len(CIERRE)]
 					jmail_comun.procesar(raw_data, fromaddr[0])
 					break
-
-
-
 			mensajeadios = random.choice(["SAYONARA", "CONSIDERA ESTO UN DIVORCIO", "VOLVERE!"])
 			conn.sendall(f"\n{mensajeadios} (Se ha cerrado la conexion)\n".encode('utf-8'))
 
