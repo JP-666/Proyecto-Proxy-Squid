@@ -19,7 +19,9 @@ then
 	read -p "Usuario de la base de datos > " usuario
 	read -p "Contraseña > " contra
 
-	echo "mysqldump -h $ip -u $usuario -p$contra --skip-ssl $base > $HOME/backups/backup_\$(date).sql"
+	COMANDO="mysqldump -h $ip -u $usuario -p$contra --skip-ssl $base > $HOME/backups/backup_\$(date).sql"
+	(crontab -l 2>/dev/null; echo "0 0 * * * $COMANDO") | crontab -
+
 else
 	echo "Introduce una ip valida!"
 fi
