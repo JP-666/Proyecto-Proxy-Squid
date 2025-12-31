@@ -1,0 +1,13 @@
+[Unit]
+Description=SJ-Mail Service - El protocolo de correo mas simple del mundo (SSL)
+After=network.target
+
+[Service]
+User=root
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 /usr/bin/sjmail
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
