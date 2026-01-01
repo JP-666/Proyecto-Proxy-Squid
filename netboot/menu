@@ -1,0 +1,8 @@
+DEFAULT menu.c32
+PROMPT 0
+TIMEOUT 100
+MENU TITLE Servidor PXE de RedInsti
+
+LABEL mxlinux
+    MENU LABEL ^MX Linux Modificado (Arranque por Red)
+    KERNEL vmlinuz

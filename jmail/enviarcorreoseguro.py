@@ -17,30 +17,42 @@ context.verify_mode = ssl.CERT_NONE
 
 # Leyendo datos
 
-De = input(f"¿Quien envia el mail? ({os.environ['USER']}): ") or os.environ['USER'] # ESTO ES UN MILLON DE VECES MEJOR QUE BASH OH DIOS MIO
-Para = input(f"¿Para quien (Usuario)? (root): ") or "root"
 IP = input("IP (127.0.0.1) > ") or "127.0.0.1"
-Asunto = input("¿Asunto? (Mensaje importante cifrado) ") or "Mensaje Importante Cifrado"
-Cuerpo = input("¿Cuerpo? (Hola!) " ) or "Hola!"
 
-print("Preparando mail...")
-MAIL = {
-	"MAIL" : {
-		"DE": De,
-		"PARA": Para,
-		"ASUNTO": Asunto,
-		"CUERPO": Cuerpo
+if not os.path.isfile("jmail.json"):
+
+	print("No se ha encontrado el archivo de jmail (jmail.json)... Componiendo uno")
+	De = input(f"¿Quien envia el mail? ({os.environ['USER']}): ") or os.environ['USER'] # ESTO ES UN MILLON DE VECES MEJOR QUE BASH OH DIOS MIO
+	Para = input(f"¿Para quien (Usuario)? (root): ") or "root"
+	Asunto = input("¿Asunto? (Mensaje importante cifrado) ") or "Mensaje Importante Cifrado"
+	Cuerpo = input("¿Cuerpo? (Hola!) " ) or "Hola!"
+
+	print("Preparando mail...")
+	MAIL = {
+		"MAIL" : {
+			"DE": De,
+			"PARA": Para,
+			"ASUNTO": Asunto,
+			"CUERPO": Cuerpo
+		}
 	}
-}
-print("Mail listo")
+	print("Mail listo")
+	mailjson=json.dumps(MAIL)
+	mailjson+="\nHASTALAVISTABABY" # Cerramos el 'email'
+	mailjson=mailjson.encode("UTF-8")
 
-mailjson=json.dumps(MAIL)
-mailjson+="\nHASTALAVISTABABY" # Cerramos el 'email'
-mailjson=mailjson.encode("UTF-8")
+else:
+	print("Usando el archivo jmail.json existente")
+	try:
+		mailjson = open("jmail.json", "r").read().encode("UTF-8")
+	except:
+		print("No se puede abrir el archivo!")
+		exit
+
 
 
 with socket.create_connection((IP, 42068)) as sock: # Nos conectamos
-	with context.wrap_socket(sock, server_hostname=servidor) as sseguro: # Elevamos a SSL
+	with context.wrap_socket(sock, server_hostname=IP) as sseguro: # Elevamos a SSL
 		sseguro.sendall(mailjson)
 		print(sseguro.recv(1024).decode())
 
