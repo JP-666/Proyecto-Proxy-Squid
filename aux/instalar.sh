@@ -6,13 +6,13 @@ then
 	echo
 	echo
 	echo
-	echo
-	apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server openssh-server git -qq
+	echo # Esto para que se salte lo del "IPTABLES no se que [YES] [NO]
+	DEBIAN_FRONTEND=noninteractive apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server openssh-server git -qq
 else
 	echo "Instalando todo"
 	echo
 	echo
 	echo
 	echo
-	apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git -qq
+	DEBIAN_FRONTEND=noninteractive apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git -qq
 fi
