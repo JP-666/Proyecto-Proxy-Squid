@@ -23,7 +23,7 @@ fi
 if [[ $(read -p "¿Quieres actulizar tambien la lista de paquetes antes de iniciar? La de Debian 12 ya esta congelada, asi que no deberia hacer falta, pero por si acaso ? ([N]/S) ") == "S" ]]
 then
 	apt update
-else
+fi
 
 echo
 echo "Instalando pxelinux y utilidades..."
@@ -54,7 +54,7 @@ cp -rvf /usr/lib/PXELINUX/pxelinux.0 /var/lib/tftpboot/
 cp -rvf /usr/lib/syslinux/modules/bios/{ldlinux.c32,menu.c32,libutil.c32,libcom32.c32} /var/lib/tftpboot/
 cp -rvf netboot/menu /var/lib/tftpboot/pxelinux.cfg/default
 
-echo "    APPEND initrd=initrd.img boot=live netboot=nfs nfsroot=$ipnueva:/netboot/debian ip=dhcp splashtop" >> /var/lib/tftpboot/pxelinux.cfg/default"
+echo "    APPEND initrd=initrd.img boot=live netboot=nfs nfsroot=$ipnueva:/netboot/debian ip=dhcp splashtop" >> /var/lib/tftpboot/pxelinux.cfg/default
 
 echo
 echo "Descargando la iso..."
