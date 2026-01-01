@@ -3,7 +3,8 @@
 # Hace un servidor netboot.
 # Este script se ejecuta desde otro auxiliar, el cual lo arranca como superusuario.
 
-ISO="https://ftp.cica.es/mirrors/Linux/MX-ISOs/MX/Final/Xfce/MX-25_Xfce_x64.iso"
+ISO="https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.2.0-amd64-xfce.iso"
+ARCHIVO="debian-live-13.2.0-amd64-xfce.iso"
 
 if [[ ! -v $router1 ]]
 then
@@ -53,29 +54,35 @@ cp -rvf /usr/lib/PXELINUX/pxelinux.0 /var/lib/tftpboot/
 cp -rvf /usr/lib/syslinux/modules/bios/{ldlinux.c32,menu.c32,libutil.c32,libcom32.c32} /var/lib/tftpboot/
 cp -rvf netboot/menu /var/lib/tftpboot/pxelinux.cfg/default
 
-echo "    APPEND initrd=initrd.gz root=/dev/nfs nfsroot=$ipnueva:/netboot/mxlinux boot=antiX disable=fstab nosplash" >> /var/lib/tftpboot/pxelinux.cfg/default
+echo "    APPEND initrd=initrd.img boot=live netboot=nfs nfsroot=$ipnueva:/netboot/debian ip=dhcp splashtop" >> /var/lib/tftpboot/pxelinux.cfg/default"
 
 echo
 echo "Descargando la iso..."
 echo
 
-wget $ISO
-
+wget -c $ISO -O $ARCHIVO # El -c por si se corta
 
 echo
-echo "Extrayendo archivos de la ISO..."
+echo "Extrayendo archivos de la ISO de Debian..."
 echo
-7z e mxlinux.iso -o/var/lib/tftpboot/ antiX/vmlinuz antiX/initrd.gz -y
 
-mkdir -p /netboot/mxlinux
-echo "Descomprimiendo la ISO completa en /netboot/mxlinux (esto VA A TARDAR)..."
-7z x mxlinux.iso -o/netboot/mxlinux/ -y
+7z e $ARCHIVO -o/var/lib/tftpboot/ live/vmlinuz live/initrd.img -y
 
-echo "/netboot/mxlinux *(ro,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+mkdir -p /netboot/debian
 
+echo "Descomprimiendo la ISO completa en /netboot/debian..."
+
+7z x $ARCHIVO -o/netboot/debian/ -y
+
+if ! grep -q "/netboot/debian" /etc/exports; then
+    echo "/netboot/debian *(ro,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+fi
 
 exportfs -ra
-chmod -R 755 /netboot/mxlinux
+chmod -R 755 /netboot/debian
 
 echo "Reiniciando servicios para aplicar cambios finales..."
+
 systemctl restart nfs-kernel-server isc-dhcp-server tftpd-hpa
+
+echo "¡Servidor listo para Debian Netboot!"
