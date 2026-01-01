@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "[11] Conf. Nginx"
-apt install php-mysql mysql-common mariadb-client mariadb-server -y # Faltaba INSTALAR la base!
+apt install php-mysql mysql-common mariadb-client mariadb-server -y -qq # Faltaba INSTALAR la base!
 rm -rvf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
 cp -rvf $archsitio /etc/nginx/sites-enabled/default
 cp -rvf $archsitio /etc/nginx/sites-available/default

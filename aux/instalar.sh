@@ -7,12 +7,12 @@ then
 	echo
 	echo
 	echo
-	apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server openssh-server git
+	apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server openssh-server git -qq
 else
 	echo "Instalando todo"
 	echo
 	echo
 	echo
 	echo
-	apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git
+	apt install -y iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git -qq
 fi

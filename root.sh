@@ -101,6 +101,9 @@ else
 fi
 echo "[12] Haciendo RADIUS"
 aux/radius.sh
-#echo "[13] Conf. Mail"
-#aux/mail.sh
 aux/jmail.sh
+echo
+echo
+echo "Asegurate de instalar tambien de ejecutar aux/backup.sh en al menos un cliente!"
+echo
+echo "Proceso finalizado"
