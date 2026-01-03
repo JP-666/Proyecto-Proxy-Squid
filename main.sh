@@ -1,29 +1,63 @@
 #!/bin/bash
+ArchAProbarAUX=("backup.sh" "crear_cuentas_sql.sh" "gen_acl.sh" "gen_variables.sh" generar_cert.sh generar_dhcp.sh generar_nginx.sh generar_red.sh generar_squid.sh instalar.sh iptables.sh jmail.sh mail.sh nginx.sh pers2.sh personalizaciones.sh radius.sh rootssh.sh)
 
+
+echo
+echo "Se va a proceder a comprobar unos requisitos... Por favor, espera"
+echo
+echo "[+] Test Superusuario"
 if [[ $UID != 0 ]]
 then
-	echo "##########################################################################################"
-	echo "##########################################################################################"
-	echo "##########################                              ##################################"
-	echo "##########################   DEBES ACCEDER COMO ROOT!   ##################################"
-	echo "##########################                              ##################################"
-	echo "##########################################################################################"
-	echo "##########################################################################################"
-	sleep 1
-	exit
+	error="\nNo eres superusuario"
+	echo "[!] Superusuario: No"
+else
+	echo "[+] Superusuario: Si"
 fi
-
+sleep 0.1 # Los sleeps para que el usuario vea lo que va pasando
+echo "[+] Comprobando estructura de carpetas..."
 
 if [[ ! $(basename $PWD) == "Proyecto-Proxy-Squid" ]]
 then
-	echo "Estas en la carpeta del proyecto?"
-	echo "basename $PWD != Proyecto-Proxy-Squid"
-	echo "Script en $(dirname $(which $0))"
+	error="No estas en la carpeta base\n"
+	echo "[!] Ubicacion: Mal"
+else
+	echo "[+] Pareces estar en la carpeta correcta"
+fi
+sleep 0.1
+
+if [[ ! -f "extras/coco.jpeg" ]]
+then
+	echo "[!] Coco: No"
+	error="\n$error Falta archivo integral 'extras/coco.jpeg'"
+else
+	echo "[+] coco.jpeg presente"
+fi
+
+echo "[+] Comprobando archivos ejecutables"
+for i in "${ArchAProbarAUX[@]}"
+do
+	if [[ -x "aux/$i" ]]
+	then
+		echo "[+] Existe y es ejecutable: $i"
+	else
+		echo "[!] No existe o no es ejecutable: $i"
+		error="$error \nError en $i (No existe o no es ejecutable)"
+	fi
+sleep 0.1
+done
+
+
+
+if [[ ! -z $error ]]
+then
+	echo "Se han encontrado errores:"
+	echo -e $error
 	exit
 fi
 
-setfont Uni3-TerminusBold24x12
-
+echo
+echo
+echo
 echo "##############################################"
 echo "###               Mega-Script              ###"
 echo "###               Instalacion              ###"
