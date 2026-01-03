@@ -48,7 +48,6 @@ def usuario_existe(nombre):
 		print(f"Usuario {nombre} no existe")
 		return False
 
-
 def crear_ruta(quien):
 	ruta_final=f"{BASE_DIR}/{quien}"
 	try:
@@ -68,17 +67,20 @@ def correoperdido(ip, datos):
 	crear_ruta("perdido")
 	archivo=f"/jmail/perdido/{ip}_{tiempo()}.invalido"
 	with open(archivo, "w") as f:
-		json.dump(datos, f, indent=4)
+		try:
+			json.dump(datos, f, indent=4)
+			print("Guardado JSON con errores como correo perdido")
+		except:
+			f.write(datos)
+			print("Guardando datos (Sin formato json) como correo perdidio")
 
 def procesar(datos, cliente):
 	try:
 		decoded_data = json.loads(datos.decode('utf-8'))
-	except JSONDecodeError:
-		print("El archivo pasado NO es json (O no es valido)")
-		correoperdido(cliente,datos.decode('utf-8'))
-		exit()
 	except Exception as ErrorJson:
-		print(f"Hay error(es): {ErrorJson}")
+		correoperdido(cliente,datos.decode('utf-8'))
+		return "[!] Tu mensaje se ha enviado a correo perdido"
+		exit()
 
 	mail_info = decoded_data.get("MAIL", {})
 	destinatario = mail_info.get("PARA", "desconocido")
