@@ -49,7 +49,7 @@ def manejar_cliente(conn, addr):
 				mensajeadios = random.choice(["SAYONARA", "CONSIDERA ESTO UN DIVORCIO", "VOLVERE!"])
 
 			conn.sendall(f"\n{mensajeadios} (Se ha cerrado la conexion)\n".encode('utf-8'))
-            
+
 	except Exception as e:
 		print(f"[!] Error manejando al cliente {client_ip}: {e}")
 
@@ -61,7 +61,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 	server.bind((IP_ESCUCHA, PUERTO))
 	server.listen(25) # Hasta 25 personas esperando en cola. Puedes cambiar esto si quieres.
 
-	print(f"J-Mail (Pruebas Multiplexado) Activo en puerto {PUERTO}...")
+	print(f"J-Mail (Sin SSL) activo en puerto {PUERTO}...")
 	print("Presiona CTRL+C para detener el servidor.")
 
 	try:
@@ -70,7 +70,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
 			hilo = threading.Thread(target=manejar_cliente, args=(conn, addr))
 			hilo.setDaemon(True) # Si el servidor muere, los hilos mueren con él
 			hilo.start()
-            
+
 	except KeyboardInterrupt:
 		print("\rSaliendo... (¡Hasta la vista, Baby!)")
 		sys.exit()
