@@ -20,13 +20,13 @@ then
 	echo "No se encuentra la variable router1 (La IP de este servidor)"
 	read -p "Introduce la IP a usar para el resto del script (10.0.0.1) ? " ipnueva
 else
-	ipnueva=$router1
+	export ipnueva=$router1
 fi
 
 if [[ ! -v $ipnueva ]]
 then
 	echo "Vale, vale, ahi va la ip 10.0.0.1"
-	ipnueva=10.0.0.1
+	export ipnueva=10.0.0.1
 fi
 
 if [[ $(read -p "¿Quieres actulizar tambien la lista de paquetes antes de iniciar? La de Debian 12 ya esta congelada, asi que no deberia hacer falta, pero por si acaso ? ([N]/S) ") == "S" ]]
@@ -74,6 +74,7 @@ echo "    APPEND initrd=debian-installer/amd64/initrd.gz auto=true priority=crit
 
 aux/gen_pre.sh
 cp cosas/pre.cfg /srv/pre.cfg
+cp netboot/post.sh /srv/
 
 echo "Reiniciando servicios para aplicar cambios finales..."
 

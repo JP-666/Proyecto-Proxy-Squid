@@ -59,4 +59,11 @@ d-i pkgsel/include string openssh-server build-essential
 d-i grub-installer/only_debian boolean true
 d-i grub-installer/with_other_os boolean true
 d-i grub-installer/bootdev string default
-d-i finish-install/reboot_in_progress note" >> cosas/pre.cfg
+d-i finish-install/reboot_in_progress note
+
+d-i preseed/late_command string \\
+    wget -O /target/tmp/post.sh http://$ipnueva/post.sh; \\
+    in-target chmod +x /tmp/post.sh; \\
+    in-target /tmp/post.sh
+
+" > cosas/pre.cfg
