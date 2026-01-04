@@ -62,14 +62,14 @@ mkdir -p /var/lib/tftpboot/
 
 cd /var/lib/tftpboot/
 
-wget -c $NB -O # El -c por si se corta
+wget $NB # El -c por si se corta
 
 tar -xvf netboot.tar.gz
 
 cd -
 
-cp netboot/menu /var/lib/tftpboot/pxelinux.cfg/default
-echo "    APPEND initrd=debian-installer/amd64/initrd.gz auto=true priority=critical locale=es_ES.UTF-8 keymap=es preseed/url=http://$ipnueva/pre.cfg --- quiet" >> /var/lib/tftpboot/pxelinux.cfg/default
+cp netboot/menu /var/lib/tftpboot/debian-installer/amd64/boot-screens/txt.cfg
+echo "    APPEND initrd=debian-installer/amd64/initrd.gz auto=true priority=critical locale=es_ES.UTF-8 keymap=es preseed/url=http://$ipnueva/pre.cfg --- quiet" >> /var/lib/tftpboot/debian-installer/amd64/boot-screens/txt.cfg
 
 
 aux/gen_pre.sh

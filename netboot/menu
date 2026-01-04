@@ -1,8 +1,3 @@
-DEFAULT menu.c32
-PROMPT 0
-TIMEOUT 100
-MENU TITLE Auto-instalador de Debian
-
-LABEL mxlinux
-    MENU LABEL ^Debian (Auto) GNU/Linux
-    KERNEL vmlinuz
+label install
+	menu label ^Install
+	kernel debian-installer/amd64/linux
