@@ -6,6 +6,16 @@
 ISO="https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.2.0-amd64-xfce.iso"
 ARCHIVO="debian-live-13.2.0-amd64-xfce.iso"
 
+echo
+echo "Este script instalara Debian 13 a traves de pxelinux."
+echo "Si quieres usar iVentoy para instalar el sistema 'MX Linux personaliazado'"
+echo "Debes seguir las instrucciones en: https://cristobal.wiki/Netboot/iVentoy"
+echo "Pero, ten en cuenta, que iVentoy es un programa 'closed-source'"
+echo "Y no se sabe lo que hace al sistema operativo que esta instalando"
+echo "Advertencia completa en https://cristobal.wiki/Netboot"
+echo
+
+
 if [[ ! -v $router1 ]]
 then
 	echo "No se encuentra la variable router1 (La IP de este servidor)"
