@@ -12,6 +12,7 @@ BASE_DIR="/jmail/"
 
 if os.path.exists("/etc/jmail/jmail.conf"):
 	us_den = []
+	aliases = {} # Para lo de los 'aliases' de una cuenta a otra
 	with open("/etc/jmail/jmail.conf", "r") as f:
 		for linea in f:
 			if linea.startswith("bloquear-usuario"):

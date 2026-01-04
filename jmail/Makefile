@@ -29,7 +29,7 @@ instalar:
 	chmod +x $(INSTALL_DIR)/$(BINARY_S_NAME)
 	cp $(SERVICE_S_NAME) $(SYSTEMD_DIR)/
 	mkdir -p /etc/jmail
-	openssl req -x509 -newkey rsa:4096 -keyout /etc/jmail/server.key -out /etc/jmail/server.crt -sha256 -days 365 -nodes
+	openssl req -x509 -newkey rsa:4096 -keyout /etc/jmail/server.key -out /etc/jmail/server.crt -sha256 -days 365 -nodes -subj "/C=ES/ST=AND/L=AND/O=JMAIL/OU=JMAIL/CN=JMAIL SSL"
 
 	# Lo de SJMAIL
 

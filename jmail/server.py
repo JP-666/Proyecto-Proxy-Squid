@@ -44,6 +44,7 @@ def manejar_cliente(conn, addr):
 				raw_data += data
 				if raw_data.strip().endswith(CIERRE):
 					raw_data = raw_data.strip()[:-len(CIERRE)]
+					mensajeadios = jmail_comun.procesar(raw_data, client_ip)
 					break
 			if not mensajeadios:
 				mensajeadios = random.choice(["SAYONARA", "CONSIDERA ESTO UN DIVORCIO", "VOLVERE!"])

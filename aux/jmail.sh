@@ -21,9 +21,19 @@ then
 	echo "[+] Enviar correo (enviarcorreo)"
 	cp -rvf enviarcorreo.sh /usr/bin/enviarcorreo
 	chmod -Rvf +x /usr/bin/enviarcorreo
+
+	echo "[+] Enviar correo seguro (enviarcorreoseguro)"
+	cp -rvf enviarcorreoseguro.py /usr/bin/enviarcorreoseguro
+	chmod -Rvf +x /usr/bin/enviarcorreoseguro
+
 	echo "[+] Leer correo (leercorreo)"
 	cp -rvf leercorreo.sh /usr/bin/leercorreo
 	chmod -Rvf +x /usr/bin/leercorreo
+
+	echo "[+] Configuracion (jmail.conf)"
+	mkdir -p /etc/jmail
+	cp -rvf jmail.conf /etc/jmail/
+
 else
 	echo "Ok, puedes usar \"nc (IP) 42069\" para comunicarte con el servidor manualmente, y puedes explorar /jmail/$USER manualmente."
 fi
