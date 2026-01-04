@@ -1,8 +1,8 @@
 DEFAULT menu.c32
 PROMPT 0
 TIMEOUT 100
-MENU TITLE Arranque red instituto
+MENU TITLE Auto-instalador de Debian
 
 LABEL mxlinux
-    MENU LABEL ^Debian GNU/Linux
+    MENU LABEL ^Debian (Auto) GNU/Linux
     KERNEL vmlinuz

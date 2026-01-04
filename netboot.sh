@@ -3,8 +3,7 @@
 # Hace un servidor netboot.
 # Este script se ejecuta desde otro auxiliar, el cual lo arranca como superusuario.
 
-ISO="https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.2.0-amd64-xfce.iso"
-ARCHIVO="debian-live-13.2.0-amd64-xfce.iso"
+NB="https://deb.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/netboot.tar.gz"
 
 echo
 echo "Este script instalara Debian 13 a traves de pxelinux."
@@ -39,7 +38,8 @@ echo
 echo "Instalando pxelinux y utilidades..."
 echo
 
-apt install -y -qq pxelinux syslinux-common syslinux-utils p7zip-full tftpd-hpa nfs-kernel-server
+apt install -y -qq pxelinux syslinux-common syslinux-utils tftpd-hpa whois # Whois trae el comando "mkpasswd"
+
 # Se puede montando la ISO, pero asi es mas 'rapido'.
 
 echo
@@ -58,41 +58,25 @@ echo "filename \"pxelinux.0\";" >> /etc/dhcp/dhcpd.conf
 
 echo "Copiando todo lo de PXE y añadiendo el archivo de configuracion"
 
+mkdir -p /var/lib/tftpboot/
 
-mkdir -p /var/lib/tftpboot/pxelinux.cfg
-cp -rvf /usr/lib/PXELINUX/pxelinux.0 /var/lib/tftpboot/
-cp -rvf /usr/lib/syslinux/modules/bios/{ldlinux.c32,menu.c32,libutil.c32,libcom32.c32} /var/lib/tftpboot/
-cp -rvf netboot/menu /var/lib/tftpboot/pxelinux.cfg/default
+cd /var/lib/tftpboot/
 
-echo "    APPEND initrd=initrd.img boot=live netboot=nfs nfsroot=$ipnueva:/netboot/debian ip=dhcp splashtop" >> /var/lib/tftpboot/pxelinux.cfg/default
+wget -c $NB -O # El -c por si se corta
 
-echo
-echo "Descargando la iso..."
-echo
+tar -xvf netboot.tar.gz
 
-wget -c $ISO -O $ARCHIVO # El -c por si se corta
+cd -
 
-echo
-echo "Extrayendo archivos de la ISO de Debian..."
-echo
+cp netboot/menu /var/lib/tftpboot/pxelinux.cfg/default
+echo "    APPEND initrd=debian-installer/amd64/initrd.gz auto=true priority=critical locale=es_ES.UTF-8 keymap=es preseed/url=http://$ipnueva/pre.cfg --- quiet" >> /var/lib/tftpboot/pxelinux.cfg/default
 
-7z e $ARCHIVO -o/var/lib/tftpboot/ live/vmlinuz live/initrd.img -y
 
-mkdir -p /netboot/debian
-
-echo "Descomprimiendo la ISO completa en /netboot/debian..."
-
-7z x $ARCHIVO -o/netboot/debian/ -y
-
-if ! grep -q "/netboot/debian" /etc/exports; then
-    echo "/netboot/debian *(ro,sync,no_subtree_check,no_root_squash)" >> /etc/exports
-fi
-
-exportfs -ra
-chmod -R 755 /netboot/debian
+aux/gen_pre.sh
+cp cosas/pre.cfg /srv/pre.cfg
 
 echo "Reiniciando servicios para aplicar cambios finales..."
 
-systemctl restart nfs-kernel-server isc-dhcp-server tftpd-hpa
+systemctl restart isc-dhcp-server tftpd-hpa
 
 echo "¡Servidor listo para Debian Netboot!"
