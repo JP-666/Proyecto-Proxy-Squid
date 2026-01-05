@@ -19,7 +19,8 @@ if os.path.exists("/etc/jmail/jmail.conf"):
 				usuario = linea.split()[1]
 				us_den.append(usuario)
 # Esto es lento, pero parece ser lo mas simple que se puede hacer
-
+else:
+	us_den = [] # Por si no tenemos el archivo, asumimos que nadie esta bloqueado (Esto causaba antes problemas)
 
 
 def easter_eggs(nombre):

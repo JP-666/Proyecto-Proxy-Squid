@@ -206,24 +206,20 @@ echo "bind-address            = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/99-permiti
 systemctl restart freeradius mariadb
 
 cd jmail/
-
 echo "[13] Instalando JMAIL"
+echo "[+] Configuracion (jmail.conf)"
+mkdir -p /etc/jmail
+cp -rvf jmail.conf /etc/jmail/
 make instalar
 echo "[+] Enviar correo (enviarcorreo)"
 cp -rvf enviarcorreo.sh /usr/bin/enviarcorreo
 chmod -Rvf +x /usr/bin/enviarcorreo
-
 echo "[+] Enviar correo seguro (enviarcorreoseguro)"
 cp -rvf enviarcorreoseguro.py /usr/bin/enviarcorreoseguro
 chmod -Rvf +x /usr/bin/enviarcorreoseguro
-
 echo "[+] Leer correo (leercorreo)"
 cp -rvf leercorreo.sh /usr/bin/leercorreo
 chmod -Rvf +x /usr/bin/leercorreo
-
-echo "[+] Configuracion (jmail.conf)"
-mkdir -p /etc/jmail
-cp -rvf jmail.conf /etc/jmail/
 echo "Configurando reglas de sudo..."
 mkdir -p /etc/sudoers.d/
 echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers.d/jmail
