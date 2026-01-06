@@ -1,6 +1,5 @@
-// He copiado casi todo el codigo de otra cosa
-
 <?php
+// Resulta que tener texto ahi estaba jodiendo cosas xd
 session_start();
 
 if (!isset($_SESSION['admin_user'])) die("Acceso denegado");

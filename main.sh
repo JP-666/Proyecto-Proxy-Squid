@@ -277,38 +277,83 @@ versionphp=$(basename "$php_dir")
 echo "[+] PHP Recortado - $versionphp"
 sleep 0.1
 
-cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
+cp /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
+echo "[+] NGINX - Copiado certificado para descarga"
+sleep 0.1
+
 mysql < cosas/base_router.sql
+echo "[+] SQL - Base router"
+sleep 0.1
+
+
 echo -n "Introduce la nueva contraseña. NO SALDRA EN EL TERMINAL > "
 read -s ncont
 conthash=$(php -r "echo password_hash('$ncont', PASSWORD_BCRYPT);")
 mysql -D router -e "UPDATE datoslogin SET contrahash = \"$conthash\" WHERE usuario = \"admin\";"
+echo "[+]  SQL - Cambio contraseña"
+sleep 0.1
+
 echo "www-data ALL=(ALL) NOPASSWD: /sbin/reboot" >> /etc/sudoers
+echo "[+] NGINX - Reglas de sudo "
+sleep 0.1
+
 systemctl restart nginx php$versionphp-fpm
+echo "[+] Reiniciando - NGINX y PHP"
+sleep 0.1
+
+
 echo "[12] Haciendo RADIUS"
 cp -rvf cosas/radius-sitio-default /etc/freeradius/3.0/sites-enabled/default
+echo "[+] Copia - Radius (1/3)"
+sleep 0.1
+
 cp -rvf cosas/radius-eap /etc/freeradius/3.0/mods-enabled/eap
+echo "[+] Copia - Radius (2/3)"
+sleep 0.1
+
 cp -rvf cosas/sqlconfradius /etc/freeradius/3.0/mods-enabled/sql
+echo "[+] Copia - Radius (3/3)"
+sleep 0.1
+
 mysql -e "CREATE DATABASE baseradius;"
+echo "[+] SQL - baseradius"
+sleep 0.1
+
 mysql -e "CREATE USER 'Fran' IDENTIFIED BY 'FranPassword';"
+echo "[+] SQL - Crear usuario"
+sleep 0.1
+
 mysql -e "GRANT ALL ON baseradius.* TO 'Fran';"
+echo "[+] SQL - Permisos"
+sleep 0.1
+
 mysql -e "FLUSH PRIVILEGES;"
+echo "[+] SQL - Privilegios"
+sleep 0.1
+
 mysql -D baseradius < /etc/freeradius/3.0/mods-config/sql/main/mysql/schema.sql
+echo "[+] SQL - Radius / Estructura"
+sleep 0.1
+
+
 for i in {1..5};
 do
 	PROF=prof$i
 	CONT=$RANDOM$RANDOM$RANDOM
-	echo "Agregando usuario $PROF con contraseña $CONT"
+	echo "[+] RADIUS - Agregando usuario $PROF con contraseña $CONT ($i/5)"
 	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$PROF', 'Cleartext-Password', ':=', '$CONT');"
+	sleep 0.1
 done
 i=0
 for i in {1..50};
 do
 	ALM=alum$i
 	CONT=$RANDOM$RANDOM$RANDOM
-	echo "Agregando usuario $ALM con contraseña $CONT"
+	echo "[+] RADIUS - Agregando usuario $ALM con contraseña $CONT ($i/50)"
 	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$ALM', 'Cleartext-Password', ':=', '$CONT');"
+	sleep 0.1
 done
+sleep 0.1
 echo "Permitiendo copias de seguridad ahora..."
 echo "[mysqld]" > /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
 echo "bind-address            = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
@@ -318,17 +363,17 @@ cd jmail/
 echo "[13] Instalando JMAIL"
 echo "[+] Configuracion (jmail.conf)"
 mkdir -p /etc/jmail
-cp -rvf jmail.conf /etc/jmail/
+cp jmail.conf /etc/jmail/
 make instalar
 echo "[+] Enviar correo (enviarcorreo)"
-cp -rvf enviarcorreo.sh /usr/bin/enviarcorreo
-chmod -Rvf +x /usr/bin/enviarcorreo
+cp enviarcorreo.sh /usr/bin/enviarcorreo
+chmod +x /usr/bin/enviarcorreo
 echo "[+] Enviar correo seguro (enviarcorreoseguro)"
-cp -rvf enviarcorreoseguro.py /usr/bin/enviarcorreoseguro
-chmod -Rvf +x /usr/bin/enviarcorreoseguro
+cp enviarcorreoseguro.py /usr/bin/enviarcorreoseguro
+chmod +x /usr/bin/enviarcorreoseguro
 echo "[+] Leer correo (leercorreo)"
-cp -rvf leercorreo.sh /usr/bin/leercorreo
-chmod -Rvf +x /usr/bin/leercorreo
+cp leercorreo.sh /usr/bin/leercorreo
+chmod +x /usr/bin/leercorreo
 echo "Configurando reglas de sudo..."
 mkdir -p /etc/sudoers.d/
 echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers.d/jmail
@@ -336,22 +381,26 @@ chmod 440 /etc/sudoers.d/jmail -Rvf
 echo "Instalando JQ para leer adjuntos"
 DEBIAN_FRONTEND=noninteractive apt install jq -y -qq
 echo "Copiando PHPs y activando el include"
-cp -rvf leerweb.sh /usr/bin/
-cp -rvf enviarcorreo.php /srv/
-cp -rvf descargar.php /srv/
-cp -rvf leercorreo.php /srv/
-cp -rvf vercorreosusuario.php /srv/
-cp -rvf jmail.php /srv/
-cp -rvf adjunto.php /srv/
+cp  leerweb.sh /usr/bin/
+cp  enviarcorreo.php /srv/
+cp  descargar.php /srv/
+cp  leercorreo.php /srv/
+cp  vercorreosusuario.php /srv/
+cp  jmail.php /srv/
+cp  adjunto.php /srv/
 cat bashrc >> $HOME/.bashrc
 echo "Copiando archivos..."
 cp alertas.sh /usr/bin/alertas
 chmod +x /usr/bin/alertas
 cp alertas.service /etc/systemd/system/
-systemctl reload-daemon
+systemctl daemon-reload
 systemctl enable --now alertas
 
 cd -
 
 echo
 echo "Asegurate de instalar tambien de ejecutar aux/backup.sh en al menos un cliente!"
+echo
+echo
+echo "Los siguientes pasos:"
+echo "	- Haz el netboot (netboot.sh / iventoy.sh)"
