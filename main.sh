@@ -120,7 +120,10 @@ fi
 
 echo "[1] Instalacion"
 echo "Hackeandote el sistema... Espera unos minutos (Esto va a tardar un poco)"
-DEBIAN_FRONTEND=noninteractive apt install -y -qq iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server >> log
+echo
+echo "(Si esto tarda, usa el comando 'tail --follow $(dirname $0)/log')"
+apt update >> log
+DEBIAN_FRONTEND=noninteractive apt install -y -qq iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server jq>> log
 echo "[2] IPTABLES"
 
 iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
@@ -175,7 +178,7 @@ echo "[+] Forwarding - Hecho"
 sleep 0.1
 
 echo "[5] Copiando archivos de /srv/"
-cp srv / >&2
+cp -r srv / >&2
 echo "[+] Copia - srv"
 sleep 0.1
 
@@ -275,7 +278,6 @@ echo "[+] PHP Recortado - $versionphp"
 sleep 0.1
 
 cp -rvf /etc/squid/ssl_cert/squid_ca.pem /srv/certi.pem
-ln -sf /srv/certi.pem /srv/alumnos/certi.pem
 mysql < cosas/base_router.sql
 echo -n "Introduce la nueva contraseña. NO SALDRA EN EL TERMINAL > "
 read -s ncont
@@ -307,7 +309,6 @@ do
 	echo "Agregando usuario $ALM con contraseña $CONT"
 	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$ALM', 'Cleartext-Password', ':=', '$CONT');"
 done
-exit
 echo "Permitiendo copias de seguridad ahora..."
 echo "[mysqld]" > /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
 echo "bind-address            = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
