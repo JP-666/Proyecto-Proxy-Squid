@@ -62,7 +62,7 @@ d-i grub-installer/bootdev string default
 d-i finish-install/reboot_in_progress note
 
 d-i preseed/late_command string \\
-    wget -O /target/tmp/post.sh http://$ipnueva/post.sh; \\
+    wget -O /target/tmp/post.sh http://10.0.0.1/post.sh; \\
     in-target chmod +x /tmp/post.sh; \\
     in-target /tmp/post.sh
 

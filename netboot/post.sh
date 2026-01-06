@@ -1,4 +1,5 @@
 #!/bin/bash
+# ESTE SCRIPT ES PARA LOS CLIENTES!
 
 apt update
 
