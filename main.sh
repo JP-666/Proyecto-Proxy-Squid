@@ -356,49 +356,110 @@ do
 	sleep 0.1
 done
 sleep 0.1
+
+
 echo "Permitiendo copias de seguridad ahora..."
 echo "[mysqld]" > /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
 echo "bind-address            = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
+echo "[+] SQL - Copias / Permitir IPs con contraseña"
+sleep 0.1
+
 systemctl restart freeradius mariadb
+echo "[+] Reiniciar / FreeRADIUS y MariaDB"
+sleep 0.1
 
 cd jmail/
+echo "[+] Entrado en carpeta jmail"
+sleep 0.1
+
 echo "[13] Instalando JMAIL"
 echo "[+] Configuracion (jmail.conf)"
 mkdir -p /etc/jmail
+echo "[+] JMAIL - Crear directorio"
+sleep 0.1
+
 cp jmail.conf /etc/jmail/
+echo "[+] JMAIL - Copiar archivo jmail.conf por defecto"
+sleep 0.1
+
+echo "[+] JMAIL - Usando make para instalar el servidor"
+sleep 0.2
 make instalar
+
 echo "[+] Enviar correo (enviarcorreo)"
 cp enviarcorreo.sh /usr/bin/enviarcorreo
 chmod +x /usr/bin/enviarcorreo
+echo "[+] JMAIL - enviarcorreo"
+sleep 0.1
+
 echo "[+] Enviar correo seguro (enviarcorreoseguro)"
 cp enviarcorreoseguro.py /usr/bin/enviarcorreoseguro
 chmod +x /usr/bin/enviarcorreoseguro
+echo "[+] JMAIL - enviarcorreoseguro"
+sleep 0.1
+
 echo "[+] Leer correo (leercorreo)"
 cp leercorreo.sh /usr/bin/leercorreo
 chmod +x /usr/bin/leercorreo
-echo "Configurando reglas de sudo..."
+echo "[+] JMAIL - leercorreo"
+sleep 0.1
+
 mkdir -p /etc/sudoers.d/
 echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers.d/jmail
 chmod 440 /etc/sudoers.d/jmail -Rvf
-echo "Instalando JQ para leer adjuntos"
-DEBIAN_FRONTEND=noninteractive apt install jq -y -qq
-echo "Copiando PHPs y activando el include"
+echo "[+] JMAIL - Reglas de sudo"
+sleep 0.1
+
+
+echo "[+] JMAIL - PHP / inicio"
+sleep 0.1
 cp  leerweb.sh /usr/bin/
+echo "[+] JMAIL - PHP / Script superusuario"
+sleep 0.1
+
 cp  enviarcorreo.php /srv/
+echo "[+] JMAIL - PHP / enviarcorreo.php"
+sleep 0.1
+
 cp  descargar.php /srv/
+echo "[+] JMAIL - PHP / descargar.php"
+sleep 0.1
+
 cp  leercorreo.php /srv/
+echo "[+] JMAIL - PHP / leercorreo.php"
+sleep 0.1
+
 cp  vercorreosusuario.php /srv/
+echo "[+] JMAIL - PHP / vercorreosusuario.php"
+sleep 0.1
+
 cp  jmail.php /srv/
+echo "[+] JMAIL - PHP / jmail.php"
+sleep 0.1
+
 cp  adjunto.php /srv/
+echo "[+] JMAIL - PHP / adjunto.php"
+sleep 0.1
+
 cat bashrc >> $HOME/.bashrc
-echo "Copiando archivos..."
+echo "[+] JMAIL - Alertas BASH"
+sleep 0.1
+
+
 cp alertas.sh /usr/bin/alertas
 chmod +x /usr/bin/alertas
 cp alertas.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable --now alertas
+echo "[+] JMAIL - Alertas SQUID por JMAIL"
+sleep 0.1
+
+
 
 cd -
+echo "[+] Volviendo a carpeta anterior ($PWD)"
+sleep 0.1
+
 
 echo
 echo "Asegurate de instalar tambien de ejecutar aux/backup.sh en al menos un cliente!"
