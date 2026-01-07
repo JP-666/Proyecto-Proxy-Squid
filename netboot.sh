@@ -14,26 +14,6 @@ echo "Y no se sabe lo que hace al sistema operativo que esta instalando"
 echo "Advertencia completa en https://cristobal.wiki/Netboot"
 echo
 
-
-if [[ ! -v $router1 ]]
-then
-	echo "No se encuentra la variable router1 (La IP de este servidor)"
-	read -p "Introduce la IP a usar para el resto del script (10.0.0.1) ? " ipnueva
-else
-	export ipnueva=$router1
-fi
-
-if [[ ! -v $ipnueva ]]
-then
-	echo "Vale, vale, ahi va la ip 10.0.0.1"
-	export ipnueva=10.0.0.1
-fi
-
-if [[ $(read -p "¿Quieres actulizar tambien la lista de paquetes antes de iniciar? La de Debian 12 ya esta congelada, asi que no deberia hacer falta, pero por si acaso ? ([N]/S) ") == "S" ]]
-then
-	apt update
-fi
-
 echo
 echo "Instalando pxelinux y utilidades..."
 echo
@@ -69,8 +49,8 @@ tar -xvf netboot.tar.gz
 cd -
 
 cp netboot/menu /var/lib/tftpboot/debian-installer/amd64/boot-screens/txt.cfg
-echo "    APPEND initrd=debian-installer/amd64/initrd.gz auto=true priority=critical locale=es_ES.UTF-8 keymap=es preseed/url=http://$ipnueva/pre.cfg --- quiet" >> /var/lib/tftpboot/debian-installer/amd64/boot-screens/txt.cfg
-
+echo "    APPEND initrd=debian-installer/amd64/initrd.gz auto=true priority=critical locale=es_ES.UTF-8 keymap=es preseed/url=http://10.0.0.1/pre.cfg --- quiet" >> /var/lib/tftpboot/debian-installer/amd64/boot-screens/txt.cfg
+#																Cambia esto por la IP, si cambia.
 
 aux/gen_pre.sh
 cp cosas/pre.cfg /srv/pre.cfg
