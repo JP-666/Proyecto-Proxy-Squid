@@ -123,7 +123,7 @@ echo "Hackeandote el sistema... Espera unos minutos (Esto va a tardar un poco)"
 echo
 echo "(Si esto tarda, usa el comando 'tail --follow $(dirname $0)/log')"
 apt update >> log
-DEBIAN_FRONTEND=noninteractive apt install -y -qq iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server jq>> log
+DEBIAN_FRONTEND=noninteractive apt install -y -qq iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server sudo jq>> log
 echo "[2] IPTABLES"
 
 iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
