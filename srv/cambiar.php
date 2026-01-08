@@ -28,8 +28,9 @@ try {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Esto dice internet que es importante, que si no, no nos da info sobre los errores
     $db->beginTransaction(); // Empezamos la operacion
     $db->prepare("DELETE FROM radcheck WHERE username = ?")->execute([$u]); // Borramos el usuario antes
-    $ins = "INSERT INTO radcheck (username, attribute, op, value) VALUES (?, 'Cleartext-Password', ':=', ?)"; // Metemos de nuevo el usuario
-    $db->prepare($ins)->execute([$u, $p]); // Lo de antes, pero en otra linea que costaba verse antes
+    $contbuena=password_hash($p, PASSWORD_BCRYPT);
+    $ins = "INSERT INTO radcheck (username, attribute, op, value) VALUES (?, 'Crypt-Password', ':=', ?)"; // Metemos de nuevo el usuario
+    $db->prepare($ins)->execute([$u, $contbuena]); // Lo de antes, pero en otra linea que costaba verse antes
     $db->commit(); // Cerramos
     echo "OK: Usuario $u creado o actualizado con contraseña $p .";
 
