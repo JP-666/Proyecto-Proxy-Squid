@@ -123,7 +123,7 @@ echo "Hackeandote el sistema... Espera unos minutos (Esto va a tardar un poco)"
 echo
 echo "(Si esto tarda, usa el comando 'tail --follow $(dirname $0)/log')"
 apt update >> log
-DEBIAN_FRONTEND=noninteractive apt install -y -qq iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server sudo jq>> log
+DEBIAN_FRONTEND=noninteractive apt install -y -qq apache-utils iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server sudo jq >> log
 echo "[2] IPTABLES"
 
 iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
@@ -340,8 +340,9 @@ for i in {1..5};
 do
 	PROF=prof$i
 	CONT=$RANDOM$RANDOM$RANDOM
+	CHASH=$(mkpasswd $CONT)
 	echo "[+] RADIUS - Agregando usuario $PROF con contraseña $CONT ($i/5)"
-	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$PROF', 'Cleartext-Password', ':=', '$CONT');"
+	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$PROF', 'Crypt-Password', ':=', '$CHASH');"
 	sleep 0.1
 done
 i=0
@@ -349,8 +350,9 @@ for i in {1..50};
 do
 	ALM=alum$i
 	CONT=$RANDOM$RANDOM$RANDOM
+	CHASH=$(mkpasswd $CONT)
 	echo "[+] RADIUS - Agregando usuario $ALM con contraseña $CONT ($i/50)"
-	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$ALM', 'Cleartext-Password', ':=', '$CONT');"
+	mysql -u Fran -pFranPassword -D baseradius -e "INSERT INTO radcheck (username, attribute, op, value) VALUES ('$ALM', 'Crypt-Password', ':=', '$CHASH');"
 	sleep 0.1
 done
 sleep 0.1
