@@ -35,6 +35,7 @@ try:
 	context.load_cert_chain(certfile="/etc/jmail/server.crt", keyfile="/etc/jmail/server.key") # Si no las tienes en tu maquina, las creas, o las copias de lo de squid, lo que te sal>
 except Exception as error:
 	print(f"No se ha podido cargar el certificado, el error ha sido {error}")
+	exit()
 bind_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 bind_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 bind_socket.bind(("0.0.0.0", 42068)) # Me queda: Permitir cambiar el puerto
