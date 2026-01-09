@@ -6,7 +6,11 @@ from datetime import datetime
 import shutil
 import random
 
-print(os.environ['DIR_JMAIL'])
+if "DIR_JMAIL" in os.environ:
+        print(f"Usando path en la variable del entorno de DIR_JMAIL ({os.environ['DIR_JMAIL']})")
+        BASE_DIR=os.environ["DIR_JMAIL"]
+else:
+        BASE_DIR="/jmail/"
 
 BASE_DIR="/jmail/"
 
