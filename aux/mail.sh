@@ -7,37 +7,17 @@ then
 fi
 
 
-if [[ ! -z $router1 ]]
-then
-	echo "Usando red ya configurada... - $router1"
-	ip=$router1
-else
-	read -p "IP de la interfaz (?) > " ip
-fi
+DEBIAN_FRONTEND=noninteractive apt install -y -qq opensmtpd mailutils
+cp /etc/smtpd.conf /etc/smtpd.conf.bak
+cp cosas/smtpd.conf /etc/
+systemctl stop opensmtpd.service
+systemctl enable --now opensmtpd.service
 
+echo "Todo listo, usa el comando siguiente para probarlo:"
 echo
+echo "echo test | mail -s 'Test' root"
 echo
+echo "Alternativamente, usa swaks con el comando:"
 echo
-
-
-BASE_IP="${ip%.*}"
-
-
-cat > cosas/main.cf << EOF
-myhostname = $ip
-mydestination = \$myhostname, localhost
-mynetworks = 127.0.0.0/8, $BASE_IP.0/24
-inet_interfaces = all
-inet_protocols = ipv4
-EOF
-
+echo "swaks --from root --to root --server 127.0.0.1"
 echo
-echo
-echo
-
-read -p "Ahora se instalara postfix, en la seleccion, marca la opcion \"sitio de internet\" - Presiona enter para continuar"
-
-apt install postfix mailutils
-
-cp -rvf cosas/main.cf /etc/postfix/main.cf
-systemctl restart postfix
