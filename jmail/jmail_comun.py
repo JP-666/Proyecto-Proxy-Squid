@@ -6,6 +6,7 @@ from datetime import datetime
 import shutil
 import random
 
+print(os.environ['DIR_JMAIL'])
 
 BASE_DIR="/jmail/"
 
