@@ -6,42 +6,35 @@ CUAL=42069
 read -p '¿HOST? (localhost) > ' DONDE
 if [[ -z $DONDE ]]
 then
-	echo "HAZ LAS COSAS BIEN JODER"
 	DONDE=localhost
 fi
 
 read -p '¿PARA QUIEN? (root) > ' DESTINO
 if [[ -z $DESTINO ]]
 then
-	echo "HAZ LAS COSAS BIEN JODER"
 	DESTINO=root
-fi
-
-
-read -p '¿EL ASUNTO? (MI JMAIL) > ' ASUNTOSPENDIENTES
-if [[ -z $ASUNTOSPENDIENTES ]]
-then
-	echo "HAZ LAS COSAS BIEN JODER"
-	ASUNTOSPENDIENTES="MI JMAIL"
 fi
 
 read -p "¿QUIEN LLAMA? ($USER) > " QUIEN
 if [[ -z $QUIEN ]]
 then
-	echo "HAZ LAS COSAS BIEN JODER"
 	QUIEN=$USER
 fi
 
-read -p '¿CUERPO? (Feliz navidad, hijo de perra) > ' MENUDOCUERPAZO
+read -p '¿EL ASUNTO? (Hola) > ' ASUNTOSPENDIENTES
+if [[ -z $ASUNTOSPENDIENTES ]]
+then
+	ASUNTOSPENDIENTES="Hola"
+fi
+
+read -p '¿CUERPO? (Buenos dias!) > ' MENUDOCUERPAZO
 if [[ -z $MENUDOCUERPAZO ]]
 then
-	echo "HAZ LAS COSAS BIEN JODER"
-	MENUDOCUERPAZO="Feliz navidad, hijo de perra"
+	MENUDOCUERPAZO="Buenos dias!"
 fi
 
 while true
 do
-
 	read -p 'Quieres enviar algun campo mas ([Nombre del campo]/([Deja vacio])) ' campo
 	if [[ ! -z $campo ]]
 	then
