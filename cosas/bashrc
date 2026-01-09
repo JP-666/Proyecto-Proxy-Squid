@@ -1,1 +1,14 @@
 PS1='\[\e[1;33m\]\t \[\e[1;36m\]\w \n\[\e[1;32m\]\u@\h \[\e[0m\]-> '
+if [[ -d "/jmail/$USER" ]]
+then
+	NUM_MAILS=$(find "/jmail/$USER" -maxdepth 1 -name "*.json" | wc -l)
+	if [[ $NUM_MAILS -gt 0 ]]
+	then
+		echo ""
+		echo "*********************************************************"
+		echo "  ¡TIENES $NUM_MAILS CORREOS NUEVOS EN J-MAIL!  "
+		echo "  Escribe 'leercorreo' para que no te los tenga que leer yo. "
+		echo "*********************************************************"
+		echo ""
+	fi
+fi
