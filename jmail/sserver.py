@@ -27,9 +27,14 @@ if os.path.exists("/etc/jmail/jmail.conf"):
 				print(f"[+] {ip} añadida a la lista de IPs bloqueadas")
 else:
 	print("El archivo /etc/jmail/jmail.conf no existe! (O no se puede leer)")
+	print("Asumiendo ningun bloqueo")
+	ips_den = []
 
 context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-context.load_cert_chain(certfile="/etc/jmail/server.crt", keyfile="/etc/jmail/server.key") # Si no las tienes en tu maquina, las creas, o las copias de lo de squid, lo que te sal>
+try:
+	context.load_cert_chain(certfile="/etc/jmail/server.crt", keyfile="/etc/jmail/server.key") # Si no las tienes en tu maquina, las creas, o las copias de lo de squid, lo que te sal>
+except Exception as error:
+	print(f"No se ha podido cargar el certificado, el error ha sido {error}")
 bind_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 bind_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 bind_socket.bind(("0.0.0.0", 42068)) # Me queda: Permitir cambiar el puerto
