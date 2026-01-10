@@ -7,7 +7,7 @@ then
 fi
 
 
-DEBIAN_FRONTEND=noninteractive apt install -y -qq opensmtpd mailutils
+DEBIAN_FRONTEND=noninteractive apt install -y -qq opensmtpd mailutils swaks
 cp /etc/smtpd.conf /etc/smtpd.conf.bak
 cp cosas/smtpd.conf /etc/
 systemctl stop opensmtpd.service

@@ -2,7 +2,6 @@
 
 Pruebas=(cosas/interfaces cosas/acl cosas/squid.conf cosas/sitio cosas/base_router.sql cosas/isc-default cosas/dhcp cosas/radius-eap cosas/radius-sitio-default cosas/sqlconfradius)
 nb=(netboot.sh netboot/post.sh netboot/menu netboot/conf_tftp aux/gen_pre.sh iventoy.sh)
-jm=(adjunto.php alertas.sh borrar.php enviarcorreo.php enviarcorreo.sh jmail.conf jmail.php leercorreo.php leerweb.sh README.md sjmail.service vercorreosusuario.php alertas.service bashrc descargar.php enviarcorreoseguro.py jmail_comun.py jmail.json jmail.service leercorreo.sh Makefile server.py sserver.py)
 srv=(cambiar.php comun.php contra.php index.php reiniciar.php)
 
 if [[ ! -z "$1" ]]
@@ -67,23 +66,6 @@ echo
 for i in "${Pruebas[@]}"
 do
 	if [[ -f "$i" ]]
-	then
-		echo "[+] Existe: $i"
-	else
-		echo "[!] No existe: $i"
-		error="$error \nError en $i (No existe o no es ejecutable)"
-	fi
-esperar
-done
-
-
-echo
-echo "[+] Comprobando archivos jmail"
-echo
-
-for i in "${jm[@]}"
-do
-	if [[ -f "jmail/$i" ]]
 	then
 		echo "[+] Existe: $i"
 	else
@@ -356,106 +338,10 @@ systemctl restart freeradius mariadb
 esperar "[+] Reiniciar / FreeRADIUS y MariaDB"
 
 
-cd jmail/
-esperar "[+] Entrado en carpeta jmail"
-
-
-echo "[13] Instalando JMAIL"
-esperar "[+] Configuracion (jmail.conf)"
-mkdir -p /etc/jmail
-esperar "[+] JMAIL - Crear directorio"
-
-
-cp jmail.conf /etc/jmail/
-esperar "[+] JMAIL - Copiar archivo jmail.conf por defecto"
-
-
-esperar "[+] JMAIL - Usando make para instalar el servidor"
-sleep 0.2
-make instalar
-
-esperar "[+] Enviar correo (enviarcorreo)"
-cp enviarcorreo.sh /usr/bin/enviarcorreo
-chmod +x /usr/bin/enviarcorreo
-esperar "[+] JMAIL - enviarcorreo"
-
-
-esperar "[+] Enviar correo seguro (enviarcorreoseguro)"
-cp enviarcorreoseguro.py /usr/bin/enviarcorreoseguro
-chmod +x /usr/bin/enviarcorreoseguro
-esperar "[+] JMAIL - enviarcorreoseguro"
-
-
-esperar "[+] Leer correo (leercorreo)"
-cp leercorreo.sh /usr/bin/leercorreo
-chmod +x /usr/bin/leercorreo
-esperar "[+] JMAIL - leercorreo"
-
-
-mkdir -p /etc/sudoers.d/
-echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/leerweb.sh" >> /etc/sudoers.d/jmail
-chmod 440 /etc/sudoers.d/jmail -Rvf
-esperar "[+] JMAIL - Reglas de sudo"
-
-
-
-esperar "[+] JMAIL - PHP / inicio"
-
-cp  leerweb.sh /usr/bin/
-esperar "[+] JMAIL - PHP / Script superusuario"
-
-
-cp  enviarcorreo.php /srv/
-esperar "[+] JMAIL - PHP / enviarcorreo.php"
-
-
-cp  descargar.php /srv/
-esperar "[+] JMAIL - PHP / descargar.php"
-
-
-cp  leercorreo.php /srv/
-esperar "[+] JMAIL - PHP / leercorreo.php"
-
-
-cp  vercorreosusuario.php /srv/
-esperar "[+] JMAIL - PHP / vercorreosusuario.php"
-
-
-cp  jmail.php /srv/
-esperar "[+] JMAIL - PHP / jmail.php"
-
-
-cp  borrar.php /srv/
-esperar "[+] JMAIL - PHP / borrar.php"
-
-
-cp  adjunto.php /srv/
-esperar "[+] JMAIL - PHP / adjunto.php"
-
-
-cat bashrc >> $HOME/.bashrc
-esperar "[+] JMAIL - Alertas BASH"
-
-
-
-cp alertas.sh /usr/bin/alertas
-chmod +x /usr/bin/alertas
-cp alertas.service /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable --now alertas
-esperar "[+] JMAIL - Alertas SQUID por JMAIL"
-
-
-
-
-cd -
-esperar "[+] Volviendo a carpeta anterior ($PWD)"
-
-
-
 echo
 echo "Asegurate de instalar tambien de ejecutar aux/backup.sh en al menos un cliente!"
 echo
 echo
-echo "Los siguientes pasos:"
+echo "Los siguientes pasos (Opcionales):"
 echo "	- Haz el netboot (netboot.sh / iventoy.sh)"
+echo "	- Instala correo (JMAIL o Mail (Estandar)) (aux/mail.sh / aux/jmail.sh)"

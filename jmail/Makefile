@@ -43,7 +43,7 @@ borrar:
 	systemctl disable --now $(SERVICE_S_NAME)
 	rm -f $(SYSTEMD_DIR)/$(SERVICE_NAME)
 	rm -f $(SYSTEMD_S_DIR)/$(SERVICE_NAME)
-	rm -f $(SCRIPT_S_NAME) $(INSTALL_DIR)/$(BINARY_S_NAME)
+	rm -f $(INSTALL_DIR)/$(BINARY_S_NAME)
 	rm -f $(INSTALL_DIR)/$(BINARY_NAME)
 	systemctl daemon-reload
 	@echo "J-Mail (Y SJ-Mail) eliminado del sistema."
