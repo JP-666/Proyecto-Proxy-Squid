@@ -126,8 +126,17 @@ echo "[1] Instalacion"
 echo "Hackeandote el sistema... Espera unos minutos (Esto va a tardar un poco)"
 echo
 echo "(Si esto tarda, usa el comando 'tail --follow $(dirname $0)/log')"
+echo "Inicio del log---" > log
+echo "# sshnuke 10.2.2.2 -rootpw=\"Z10NO101\"" >> log
+echo "Connecting to 10.2.2.2:ssh ... successful." >> log
+echo "Attempting to exploit SSHv1 CRC32 ... successful." >> log
+echo "Reseting root password to \"Z10N0101\"." >> log
+echo "# ssh 10.2.2.2 -l root" >> log
+echo "root@10.2.2.2's password:" >> log
 apt update >> log
 DEBIAN_FRONTEND=noninteractive apt install -y -qq whois iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server sudo jq >> log
+echo "Final del log, puedes volver al terminal anterior" >> log
+
 echo "[2] IPTABLES"
 
 iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
