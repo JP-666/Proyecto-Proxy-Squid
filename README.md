@@ -13,7 +13,7 @@ Tambien se incluye instalacion de un servidor RADIUS con DHCP, DNS y extras.
 * **Modularidad de PHP**: Detección dinámica de la versión de PHP instalada para la configuración automática de servicios PHP-FPM y sockets de NGINX.
 * **Proxy Transparente**: Configuración automatizada de reglas de IPTABLES para la redirección de tráfico sin requerir configuración manual en los dispositivos cliente.
 * **RADIUS**: Configuración e instalacion de RADIUS para autenticacion GTC wireless 802.11X.
-* **Y mucho mas**: Explora el repositorio y encuentra mucho mas como los scripts de utilidad.
+* **ACL**: Bloqueo basado en listas de control de acceso.
 
 ## **Procedimiento de Instalación**
 
