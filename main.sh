@@ -23,86 +23,86 @@ else
 	}
 fi
 
-echo
-echo "Se va a proceder a comprobar unos requisitos... Por favor, espera"
-echo
-echo "[+] Test Superusuario"
+esperar
+esperar "Se va a proceder a comprobar unos requisitos... Por favor, espera"
+esperar
+esperar "[+] Test Superusuario"
 
 
 
 if [[ $UID != 0 ]]
 then
 	error="\nNo eres superusuario"
-	echo "[!] Superusuario: No"
+	esperar "[!] Superusuario: No"
 else
-	echo "[+] Superusuario: Si"
+	esperar "[+] Superusuario: Si"
 fi
 
 esperar # Los sleeps para que el usuario vea lo que va pasando
 
-echo "[+] Comprobando estructura de carpetas..."
+esperar "[+] Comprobando estructura de carpetas..."
 
 if [[ ! $(basename $PWD) == "Proyecto-Proxy-Squid" ]]
 then
 	error="No estas en la carpeta base\n"
-	echo "[!] Ubicacion: Mal"
+	esperar "[!] Ubicacion: Mal"
 else
-	echo "[+] Pareces estar en la carpeta correcta"
+	esperar "[+] Pareces estar en la carpeta correcta"
 fi
 
 esperar
 
 if [[ ! -f "extras/coco.jpeg" ]]
 then
-	echo "[!] Coco: No"
+	esperar "[!] Coco: No"
 	error="\n$error Falta archivo integral 'extras/coco.jpeg'"
 else
-	echo "[+] coco.jpeg presente"
+	esperar "[+] coco.jpeg presente"
 fi
 
-echo
-echo "[+] Comprobando archivos necesarios"
-echo
+esperar
+esperar "[+] Comprobando archivos necesarios"
+esperar
 for i in "${Pruebas[@]}"
 do
 	if [[ -f "$i" ]]
 	then
-		echo "[+] Existe: $i"
+		esperar "[+] Existe: $i"
 	else
-		echo "[!] No existe: $i"
+		esperar "[!] No existe: $i"
 		error="$error \nError en $i (No existe o no es ejecutable)"
 	fi
 esperar
 done
 
-echo
-echo "[+] Comprobando archivos interfaz"
-echo
+esperar
+esperar "[+] Comprobando archivos interfaz"
+esperar
 
 for i in "${srv[@]}"
 do
 	if [[ -f "srv/$i" ]]
 	then
-		echo "[+] Existe: $i"
+		esperar "[+] Existe: $i"
 	else
-		echo "[!] No existe: $i"
+		esperar "[!] No existe: $i"
 		error="$error \nError en $i (No existe o no es ejecutable)"
 	fi
 esperar
 done
 
-echo
-echo "[+] Comprobando archivos para netboot"
-echo
+esperar
+esperar "[+] Comprobando archivos para netboot"
+esperar
 
 
 for i in "${nb[@]}"
 do
 	if [[ -f "$i" ]]
 	then
-		echo "[+] Existe: $i"
+		esperar "[+] Existe: $i"
 	else
-		echo "[!] No existe: $i - Pero esto no es necesario"
+		esperar "[!] No existe: $i - Pero esto no es necesario"
 	fi
 	esperar
 done
@@ -112,14 +112,17 @@ done
 
 
 if [[ ! -z $error ]] # ¿Por que he usado ! si iba a poner un else de todas formas?
-then
+then # Esto se queda con 'echo' por que tiene que salir siempre
 	echo
 	echo "Se han encontrado errores:"
 	echo -e $error
 	echo
 	exit
 else
-	read -p "Todas las comprobaciones OK. Presiona enter. "
+	if [[ ! $1 == "--silencio"  || ! $1 == "--rapido" ]]
+	then # Asumimos, ¿Que podria salir mal?
+		read -p "Todas las comprobaciones OK. Presiona enter. "
+	fi
 fi
 
 esperar "[1] Instalacion"
