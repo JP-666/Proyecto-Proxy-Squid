@@ -134,7 +134,7 @@ echo "Reseting root password to \"Z10N0101\"." >> log
 echo "# ssh 10.2.2.2 -l root" >> log
 echo "root@10.2.2.2's password:" >> log
 apt update >> log
-DEBIAN_FRONTEND=noninteractive apt install -y -qq whois iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server sudo jq >> log
+DEBIAN_FRONTEND=noninteractive apt install -y -qq whois iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server sudo jq ed >> log
 echo "Final del log, puedes volver al terminal anterior" >> log
 
 echo "[2] IPTABLES"
@@ -271,6 +271,7 @@ echo -n "Introduce la nueva contraseña. NO SALDRA EN EL TERMINAL > "
 read -s ncont
 conthash=$(php -r "echo password_hash('$ncont', PASSWORD_BCRYPT);")
 mysql -D router -e "UPDATE datoslogin SET contrahash = \"$conthash\" WHERE usuario = \"admin\";"
+echo
 esperar "[+]  SQL - Cambio contraseña"
 
 
