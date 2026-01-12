@@ -17,10 +17,10 @@ then
 		exit
 	fi
 else
-		esperar() { # En vez de dos lineas, 1, algo mas facil
-			echo $@
-			sleep 0.1
-		}
+	esperar() { # En vez de dos lineas, 1, algo mas facil
+		echo $@
+		sleep 0.1
+	}
 fi
 
 echo
@@ -122,9 +122,9 @@ else
 	read -p "Todas las comprobaciones OK. Presiona enter. "
 fi
 
-echo "[1] Instalacion"
-echo "Hackeandote el sistema... Espera unos minutos (Esto va a tardar un poco)"
-echo
+esperar "[1] Instalacion"
+esperar "Hackeandote el sistema... Espera unos minutos (Esto va a tardar un poco)"
+esperar
 echo "(Si esto tarda, usa el comando 'tail --follow $(dirname $0)/log')"
 echo "Inicio del log---" > log
 echo "# sshnuke 10.2.2.2 -rootpw=\"Z10NO101\"" >> log
@@ -137,7 +137,7 @@ apt update >> log
 DEBIAN_FRONTEND=noninteractive apt install -y -qq whois iptables squid-openssl iptables-persistent isc-dhcp-server nginx php-fpm openssh-server git freeradius freeradius-mysql mariadb-common mariadb-server php-mysql mysql-common mariadb-client mariadb-server sudo jq ed >> log
 echo "Final del log, puedes volver al terminal anterior" >> log
 
-echo "[2] IPTABLES"
+esperar "[2] IPTABLES"
 
 iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 esperar "[+] iptables - 1"
@@ -163,47 +163,47 @@ esperar "[+] iptables - 7"
 netfilter-persistent save
 esperar "[+] iptables - Guardado"
 
-echo "[3] SSH - Root"
-echo "Permitiendo loguearse como Root con contraseña por SSH"
+esperar "[3] SSH - Root"
+esperar "Permitiendo loguearse como Root con contraseña por SSH"
 cat /usr/share/openssh/sshd_config | sed 's/\#PermitRootLogin prohibit-password/PermitRootLogin yes/g' > /etc/ssh/sshd_config
 esperar "[+] SSH - Permitido"
-echo "Reiniciando SSH..."
+esperar "Reiniciando SSH..."
 systemctl restart sshd
 esperar "[+] SSH - Reiniciado"
 
 
-echo "[4] Forwarding"
+esperar "[4] Forwarding"
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.conf
 esperar "[+] Forwarding - Hecho"
 sysctl -p
 esperar "[+] SYSCTL - Activado"
 
-echo "[5] Copiando archivos de /srv/"
+esperar "[5] Copiando archivos de /srv/"
 cp -r srv / >&2
 esperar "[+] Copia - srv"
 
 
-echo "Saltando [6]..."
+esperar "Saltando [6]..."
 esperar "[?] [6] - Saltado"
 
-echo "[7] Conf. Red"
+esperar "[7] Conf. Red"
 cp cosas/interfaces /etc/network/interfaces
 esperar "[+] Copia - interfaces"
 
 
 
-echo " - Reiniciando red"
+esperar " - Reiniciando red"
 systemctl restart networking
 esperar "[+] Reinicio - networking"
 
-echo "[8] Copiando squid"
+esperar "[8] Copiando squid"
 cp cosas/acl /etc/squid/acl.txt
 esperar "[+] Copia - acl"
 
 cp cosas/squid.conf /etc/squid/squid.conf
 esperar "[+] Copia - squid.conf"
 
-echo "[9] Creando certificados"
+esperar "[9] Creando certificados"
 mkdir -p /etc/squid/ssl_cert
 esperar "[+] Carpeta ssl - creada"
 
@@ -225,11 +225,11 @@ esperar "[+] Generando cache certificados"
 chown -R proxy:proxy /var/lib/squid/ssl_db
 esperar "[+] Cache certificados - permisos"
 
-echo " - Reiniciando squid (Esto va a tardar un poco...)"
+esperar " - Reiniciando squid (Esto va a tardar un poco...)"
 systemctl restart squid
 esperar "[+] Reinicio - squid"
 
-echo "[10] Conf. dhcp"
+esperar "[10] Conf. dhcp"
 cp cosas/dhcp /etc/dhcp/dhcpd.conf
 esperar "[+] Copia - dhcp (dhcpd.conf)"
 
@@ -239,7 +239,7 @@ esperar "[+] Copia - dhcp (isc-dhcp-server)"
 systemctl restart isc-dhcp-server
 esperar "[+] Reinicio - dhcp"
 
-echo "[11] Conf. Nginx"
+esperar "[11] Conf. Nginx"
 rm /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
 esperar "[+] NGINX - Borrando sitio por defecto"
 
@@ -271,7 +271,7 @@ echo -n "Introduce la nueva contraseña. NO SALDRA EN EL TERMINAL > "
 read -s ncont
 conthash=$(php -r "echo password_hash('$ncont', PASSWORD_BCRYPT);")
 mysql -D router -e "UPDATE datoslogin SET contrahash = \"$conthash\" WHERE usuario = \"admin\";"
-echo
+esperar
 esperar "[+]  SQL - Cambio contraseña"
 
 
@@ -284,7 +284,7 @@ esperar "[+] Reiniciando - NGINX y PHP"
 
 
 
-echo "[12] Haciendo RADIUS"
+esperar "[12] Haciendo RADIUS"
 cp -rvf cosas/radius-sitio-default /etc/freeradius/3.0/sites-enabled/default
 esperar "[+] Copia - Radius (1/3)"
 
@@ -338,7 +338,7 @@ done
 
 
 
-echo "Permitiendo copias de seguridad ahora..."
+esperar "Permitiendo copias de seguridad ahora..."
 echo "[mysqld]" > /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
 echo "bind-address            = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/99-permitir-copias.cnf
 esperar "[+] SQL - Copias / Permitir IPs con contraseña"
