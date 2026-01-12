@@ -2,6 +2,7 @@
 
 # Hace un servidor netboot.
 # Este script se ejecuta desde otro auxiliar, el cual lo arranca como superusuario.
+ipnueva=10.0.0.1
 
 NB="https://deb.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/netboot.tar.gz"
 
