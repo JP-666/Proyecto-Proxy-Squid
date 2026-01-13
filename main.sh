@@ -10,7 +10,7 @@ then
 	if [[ $1 == "--silencio"  || $1 == "--rapido" ]]
 	then
 		esperar () {
-			true # Tiene que tener algo
+			echo $@ >> log.install  # Tiene que tener algo
 		}
 	else
 		echo "Uso $0 [--silencio]"
@@ -19,6 +19,7 @@ then
 else
 	esperar() { # En vez de dos lineas, 1, algo mas facil
 		echo $@
+		echo $@ >> log.install
 		sleep 0.1
 	}
 fi
