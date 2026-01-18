@@ -2,7 +2,7 @@ ddns-update-style none;
 default-lease-time 600;
 max-lease-time 7200;
 authoritative;
-option domain-name-servers 8.8.8.8, 8.8.4.4;
+option domain-name-servers 10.0.0.1;
 option domain-name "redinsti";
 
 subnet 10.0.0.0 netmask 255.255.255.0 {
